@@ -1,0 +1,6 @@
+name: SpeedLimiter
+main: com.Zenya.SpeedLimiter.Main
+version: 1.0.0
+author: Zenya4
+description: Limits travel speed to reduce lag from chunk loading
+api-version: 1.14
