@@ -76,6 +76,8 @@ public class Listeners implements Listener {
 	
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent e) {
+		if(e.getPlayer().hasPermission("speedlimiter.bypass") || e.getPlayer().hasPermission("speedlimit.bypass")) return;
+
 		if(e.getPlayer().isFlying()) return;
 		if(e.getPlayer().isSprinting()) e.getPlayer().setSprinting(false);
 	}
