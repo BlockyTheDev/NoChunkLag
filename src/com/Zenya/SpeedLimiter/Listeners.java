@@ -15,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Listeners implements Listener {
 	
 	public final CooldownManager cooldownManager = new CooldownManager();
+	private ConfigManager configManager = ConfigManager.getInstance();
 	private final Plugin plugin;
 	
 	public Listeners(Plugin plugin) {
@@ -33,7 +34,7 @@ public class Listeners implements Listener {
 			if(inv.getItemInMainHand().getType() == Material.FIREWORK_ROCKET || inv.getItemInOffHand().getType() == Material.FIREWORK_ROCKET) {
 				if(inv.getArmorContents()[2].getType() == Material.ELYTRA) {
 					if(timeLeft == 0) {
-						cooldownManager.setCooldown(e.getPlayer(), 15);
+						cooldownManager.setCooldown(e.getPlayer(), configManager.getCooldown("elytra"));
 						new BukkitRunnable() {
 							@Override
 							public void run() {
@@ -54,7 +55,7 @@ public class Listeners implements Listener {
 			
 			else if((inv.getItemInMainHand().getType() == Material.TRIDENT && inv.getItemInMainHand().containsEnchantment(Enchantment.RIPTIDE)) || (inv.getItemInOffHand().getType() == Material.TRIDENT && inv.getItemInOffHand().containsEnchantment(Enchantment.RIPTIDE))) {
 				if(timeLeft == 0) {
-					cooldownManager.setCooldown(e.getPlayer(), 5);
+					cooldownManager.setCooldown(e.getPlayer(), configManager.getCooldown("trident"));
 					new BukkitRunnable() {
 						@Override
 						public void run() {

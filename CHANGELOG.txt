@@ -7,3 +7,6 @@
 
 1.0.2:
 - Fixed plugin sometimes not working for versions 1.13.x - 1.14.x
+
+1.0.3:
+- Added feature to configure cooldown time
