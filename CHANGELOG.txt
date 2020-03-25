@@ -10,3 +10,6 @@
 
 1.0.3:
 - Added feature to configure cooldown time
+
+1.0.4:
+- Fixed issue where config does not generate on first plugin load
