@@ -16,31 +16,23 @@ public class ConfigManager {
 	FileConfiguration config;
 	private static ConfigManager configManager;
 	
-	public ConfigManager() {
+	private ConfigManager() {
 		this.plugin = Main.instance;
 		this.config = plugin.getConfig();
-		
+
 		if(!(this.getConfigExists())) {
-			this.setDefaults();
+			plugin.saveDefaultConfig();
 		}
-	}
-	
-	public void setDeveloperDefaults() { // For config revisions
-		plugin.saveDefaultConfig();
-		config.set("config-version", 1);
-		
-		for(EntityType type: EntityType.values()) {
-			if(type.isAlive()) {
-				String name = type.toString().toUpperCase();
-				config.set("mobs."+name+".name", "&c"+name.toUpperCase()+" Spawner");
-				config.set("mobs."+name+".drop-chance", 1);
-			}
+
+		if(this.getConfigVersion() != 1) {
+			File configFile = new File(plugin.getDataFolder(), "config.yml");
+			File oldConfigFile = new File(plugin.getDataFolder(), "config.yml.old");
+
+			configFile.renameTo(oldConfigFile);
+			configFile.delete();
+
+			plugin.saveDefaultConfig();
 		}
-		plugin.saveConfig();
-	}
-	
-	public void setDefaults() {
-		plugin.saveDefaultConfig();
 	}
 	
 	public boolean getConfigExists() {
@@ -48,8 +40,22 @@ public class ConfigManager {
 		return configFile.exists();
 	}
 
+	public int getConfigVersion() {
+		int iver;
+		if(!config.contains("config-version") || config.get("config-version") == null) {
+			iver = 0;
+		} else {
+			iver = config.getInt("config-version");
+		}
+		return iver;
+	}
+
 	public int getCooldown(String type) {
 		return config.getInt(type.toLowerCase() + "-cooldown");
+	}
+
+	public String getMessage(String type, Integer time) {
+		return ChatColor.translateAlternateColorCodes('&', config.getString(type.toLowerCase() + "-cooldown").replace("%time%", time.toString()));
 	}
 	
 	public static ConfigManager getInstance() {

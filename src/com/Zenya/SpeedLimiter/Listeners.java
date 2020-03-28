@@ -29,7 +29,7 @@ public class Listeners implements Listener {
 		
 		if(e.getPlayer().hasPermission("speedlimiter.bypass") || e.getPlayer().hasPermission("speedlimit.bypass")) return;
 		
-		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+		if(e.getAction() == Action.RIGHT_CLICK_AIR) {
 
 			if(inv.getItemInMainHand().getType() == Material.FIREWORK_ROCKET || inv.getItemInOffHand().getType() == Material.FIREWORK_ROCKET) {
 				if(inv.getArmorContents()[2].getType() == Material.ELYTRA) {
@@ -46,7 +46,7 @@ public class Listeners implements Listener {
 							}
 						}.runTaskTimer(this.plugin, 20, 20);
 					} else {
-						String message = ChatColor.RED + "Wait " + ChatColor.DARK_RED + timeLeft + ChatColor.RED + " seconds before using this again";
+						String message = configManager.getMessage("elytra", cooldownManager.getCooldown(e.getPlayer()));
 						e.getPlayer().sendTitle("", message, 10, 70, 20);
 						e.setCancelled(true);
 					}
@@ -67,7 +67,7 @@ public class Listeners implements Listener {
 						}
 					}.runTaskTimer(this.plugin, 20, 20);
 				} else {
-					String message = ChatColor.RED + "Wait " + ChatColor.DARK_RED + timeLeft + ChatColor.RED + " seconds before using this again";
+					String message = configManager.getMessage("trident", cooldownManager.getCooldown(e.getPlayer()));
 					e.getPlayer().sendTitle("", message, 10, 70, 20);
 					e.setCancelled(true);
 				}

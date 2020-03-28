@@ -13,3 +13,7 @@
 
 1.0.4:
 - Fixed issue where config does not generate on first plugin load
+
+1.0.5:
+- Fixed bug where rightclicking blocks with a firework in hand triggered cooldown
+- Added configurable cooldown messages in config
