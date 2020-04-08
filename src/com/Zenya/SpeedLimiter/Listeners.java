@@ -1,16 +1,20 @@
 package com.Zenya.SpeedLimiter;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerRiptideEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class Listeners implements Listener {
 	
@@ -52,28 +56,38 @@ public class Listeners implements Listener {
 					}
 				}
 			}
-			
-			else if((inv.getItemInMainHand().getType() == Material.TRIDENT && inv.getItemInMainHand().containsEnchantment(Enchantment.RIPTIDE)) || (inv.getItemInOffHand().getType() == Material.TRIDENT && inv.getItemInOffHand().containsEnchantment(Enchantment.RIPTIDE))) {
-				if(timeLeft == 0) {
-					cooldownManager.setCooldown(e.getPlayer(), configManager.getCooldown("trident"));
-					new BukkitRunnable() {
-						@Override
-						public void run() {
-							int timeLeft = cooldownManager.getCooldown(e.getPlayer());
-							cooldownManager.setCooldown(e.getPlayer(), --timeLeft);
-							if(timeLeft == 0) {
-								cancel();
-							}
-						}
-					}.runTaskTimer(this.plugin, 20, 20);
-				} else {
-					String message = configManager.getMessage("trident", cooldownManager.getCooldown(e.getPlayer()));
-					e.getPlayer().sendTitle("", message, 10, 70, 20);
-					e.setCancelled(true);
-				}
-			}
 		}
 	}
+
+	@EventHandler
+	public void onPlayerRiptideEvent(PlayerRiptideEvent e) {
+		int timeLeft = cooldownManager.getCooldown(e.getPlayer());
+		if(e.getPlayer().hasPermission("speedlimiter.bypass") || e.getPlayer().hasPermission("speedlimit.bypass")) return;
+			if(timeLeft == 0) {
+				cooldownManager.setCooldown(e.getPlayer(), configManager.getCooldown("trident"));
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						int timeLeft = cooldownManager.getCooldown(e.getPlayer());
+						cooldownManager.setCooldown(e.getPlayer(), --timeLeft);
+						if(timeLeft == 0) {
+							cancel();
+						}
+					}
+				}.runTaskTimer(this.plugin, 20, 20);
+			} else {
+				String message = configManager.getMessage("trident", cooldownManager.getCooldown(e.getPlayer()));
+				e.getPlayer().sendTitle("", message, 10, 70, 20);
+
+				Location oldLoc = e.getPlayer().getLocation();
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						e.getPlayer().teleport(oldLoc);
+					}
+				}.runTaskLater(this.plugin, 1);
+			}
+		}
 	
 	@EventHandler
 	public void onPlayerToggleFlightEvent(PlayerToggleFlightEvent e) {

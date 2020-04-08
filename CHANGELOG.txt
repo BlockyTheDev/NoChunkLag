@@ -17,3 +17,7 @@
 1.0.5:
 - Fixed bug where rightclicking blocks with a firework in hand triggered cooldown
 - Added configurable cooldown messages in config
+
+1.0.6:
+- Fixed a bug where trident cooldown is not being applied
+- Fixed cooldown message just being shown as the default cooldown in config

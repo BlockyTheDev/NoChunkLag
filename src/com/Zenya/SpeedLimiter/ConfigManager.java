@@ -55,7 +55,7 @@ public class ConfigManager {
 	}
 
 	public String getMessage(String type, Integer time) {
-		return ChatColor.translateAlternateColorCodes('&', config.getString(type.toLowerCase() + "-cooldown").replace("%time%", time.toString()));
+		return ChatColor.translateAlternateColorCodes('&', config.getString(type.toLowerCase() + "-message").replace("%time%", time.toString()));
 	}
 	
 	public static ConfigManager getInstance() {
