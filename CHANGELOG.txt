@@ -21,3 +21,7 @@
 1.0.6:
 - Fixed a bug where trident cooldown is not being applied
 - Fixed cooldown message just being shown as the default cooldown in config
+
+1.0.7:
+- Added 1.16.3 support
+- Fixed NPE in PlayerInteractEvent

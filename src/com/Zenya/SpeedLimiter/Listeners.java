@@ -35,8 +35,8 @@ public class Listeners implements Listener {
 		
 		if(e.getAction() == Action.RIGHT_CLICK_AIR) {
 
-			if(inv.getItemInMainHand().getType() == Material.FIREWORK_ROCKET || inv.getItemInOffHand().getType() == Material.FIREWORK_ROCKET) {
-				if(inv.getArmorContents()[2].getType() == Material.ELYTRA) {
+			if((inv.getItemInMainHand() != null && inv.getItemInMainHand().getType() == Material.FIREWORK_ROCKET) || (inv.getItemInOffHand() != null && inv.getItemInOffHand().getType() == Material.FIREWORK_ROCKET)) {
+				if(inv.getArmorContents().length != 0 && inv.getArmorContents()[2] != null && inv.getArmorContents()[2].getType() == Material.ELYTRA) {
 					if(timeLeft == 0) {
 						cooldownManager.setCooldown(e.getPlayer(), configManager.getCooldown("elytra"));
 						new BukkitRunnable() {
