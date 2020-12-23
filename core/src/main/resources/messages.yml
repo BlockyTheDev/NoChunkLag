@@ -1,0 +1,9 @@
+# For internal reference only, do not change the messages version
+messages-version: 1
+
+no-elytra-riptide: '&cYou are not allowed to wear an elytra while using riptide'
+low-tps: '&cThis action has been temporarily blocked to reduce server lag (TPS = &4%tps%)'
+
+cooldowns:
+  elytra-boost: '&cPlease wait &4%cooldown_elytra% &cseconds before using this again'
+  trident-riptide: '&cPlease wait &4%cooldown_trident% &cseconds before using this again'

@@ -1,5 +1,0 @@
-config-version: 1
-elytra-cooldown: 15
-elytra-message: '&cPlease wait &4%time% &cseconds before using this again'
-trident-cooldown: 5
-trident-message: '&cPlease wait &4%time% &cseconds before using this again'
