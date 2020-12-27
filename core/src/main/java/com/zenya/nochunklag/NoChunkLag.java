@@ -1,26 +1,25 @@
 package com.zenya.nochunklag;
 
+import com.zenya.nochunklag.command.NoChunkLagCommand;
 import com.zenya.nochunklag.event.Listeners;
 import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.file.MessagesManager;
 import com.zenya.nochunklag.nms.CompatibilityHandler;
 import com.zenya.nochunklag.nms.ProtocolNMS;
-import com.zenya.nochunklag.util.TPSTracker;
+import com.zenya.nochunklag.scheduler.TaskManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.IOException;
 
 public class NoChunkLag extends JavaPlugin {
     private static NoChunkLag instance;
     private static CompatibilityHandler compatibilityHandler = CompatibilityHandler.getInstance();
     private static ProtocolNMS protocolNMS;
-    private static TPSTracker tpsTracker;
 
     public void onEnable() {
         instance = this;
 
+        //Set NMS version
         try {
             protocolNMS = compatibilityHandler.getProtocolNMS().newInstance();
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
@@ -29,16 +28,18 @@ public class NoChunkLag extends JavaPlugin {
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
 
-        tpsTracker = TPSTracker.getInstance();
+        //Register all runnables
+        TaskManager.getInstance();
 
-        try {
-            ConfigManager.getInstance();
-            MessagesManager.getInstance();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //Init config and messages
+        ConfigManager.getInstance();
+        MessagesManager.getInstance();
 
+        //Register events
         this.getServer().getPluginManager().registerEvents(new Listeners(), this);
+
+        //Register commands
+        this.getCommand("nochunklag").setExecutor(new NoChunkLagCommand());
     }
 
     public void onDisable() {
@@ -47,10 +48,6 @@ public class NoChunkLag extends JavaPlugin {
 
     public static ProtocolNMS getProtocolNMS() {
         return protocolNMS;
-    }
-
-    public static TPSTracker getTPSTracker() {
-        return tpsTracker;
     }
 
     public static NoChunkLag getInstance() {

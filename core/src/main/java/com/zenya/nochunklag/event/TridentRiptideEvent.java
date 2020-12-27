@@ -5,6 +5,7 @@ import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.cooldown.CooldownManager;
 import com.zenya.nochunklag.cooldown.CooldownType;
+import com.zenya.nochunklag.scheduler.TrackTPSTask;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -13,7 +14,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerRiptideEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 public class TridentRiptideEvent extends Event implements Cancellable {
     private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
@@ -63,7 +63,7 @@ public class TridentRiptideEvent extends Event implements Cancellable {
         //Not on cooldown
         if (getCooldown() < 1) {
             //TPS above threshold
-            if (noChunkLag.getTPSTracker().getTps() > configManager.getInt("noboost-tps-treshold")) {
+            if (TrackTPSTask.getInstance().getTps() > configManager.getInt("noboost-tps-treshold")) {
                 //Not wearing elytra or has bypass permission
                 try {
                     if(!getPlayer().getInventory().getChestplate().getType().equals(XMaterial.ELYTRA.parseMaterial()) || getPlayer().hasPermission(configManager.getString("elytra-riptide-permission"))) {

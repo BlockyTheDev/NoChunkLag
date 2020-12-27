@@ -118,6 +118,11 @@ public class ConfigManager {
         return val;
     }
 
+    public static void reloadConfig() {
+        configManager = null;
+        getInstance();
+    }
+
 
     public static ConfigManager getInstance() {
         if(configManager == null) {

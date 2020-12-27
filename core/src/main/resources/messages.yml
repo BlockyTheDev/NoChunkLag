@@ -1,5 +1,5 @@
 # For internal reference only, do not change the messages version
-messages-version: 1
+messages-version: 2
 
 no-elytra-riptide: '&cYou are not allowed to wear an elytra while using riptide'
 low-tps: '&cThis action has been temporarily blocked to reduce server lag (TPS = &4%tps%)'
@@ -7,3 +7,11 @@ low-tps: '&cThis action has been temporarily blocked to reduce server lag (TPS =
 cooldowns:
   elytra-boost: '&cPlease wait &4%cooldown_elytra% &cseconds before using this again'
   trident-riptide: '&cPlease wait &4%cooldown_trident% &cseconds before using this again'
+
+notifications:
+  admin:
+    tps-low: '&cElytra-boosting and trident riptide has been disabled due to low TPS (TPS = &4%tps%)'
+    tps-regular: '&aElytra-boosting and trident riptide has been enabled as TPS is now back to normal (TPS = &2%tps%)'
+  player:
+    elytra-boost-ready: '&6You can now use elytra-boosting again'
+    trident-riptide-ready: '&6You can now use riptide again'

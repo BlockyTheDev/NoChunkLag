@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MessagesManager {
-    private int messagesVersion = 1; //Change this when updating messages
+    private int messagesVersion = 2; //Change this when updating messages
     private boolean resetMessages = false; //Change this if messages should reset when updating
 
     private static MessagesManager messagesManager;
@@ -72,10 +72,19 @@ public class MessagesManager {
         return val;
     }
 
+    public static void reloadMessages() {
+        messagesManager = null;
+        getInstance();
+    }
 
-    public static MessagesManager getInstance() throws IOException {
+
+    public static MessagesManager getInstance() {
         if(messagesManager == null) {
-            messagesManager = new MessagesManager();
+            try {
+                messagesManager = new MessagesManager();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return messagesManager;
     }

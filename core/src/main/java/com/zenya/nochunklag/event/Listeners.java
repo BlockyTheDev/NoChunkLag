@@ -6,7 +6,9 @@ import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.cooldown.CooldownType;
 import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.file.MessagesManager;
+import com.zenya.nochunklag.scheduler.TrackTPSTask;
 import com.zenya.nochunklag.util.ChatUtils;
+import com.zenya.nochunklag.util.MetaUtils;
 import com.zenya.nochunklag.util.PermissionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -16,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRiptideEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -26,14 +29,19 @@ import java.util.Random;
 public class Listeners implements Listener {
     private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
     private static ConfigManager configManager = ConfigManager.getInstance();
-    private static MessagesManager messagesManager;
+    private static MessagesManager messagesManager = MessagesManager.getInstance();
+    private static MetaUtils metaUtils = MetaUtils.getInstance();
 
-    static {
-        try {
-            messagesManager = MessagesManager.getInstance();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                metaUtils.setMeta(e.getPlayer(), "nochunklag.notified.regtps", "");
+                metaUtils.setMeta(e.getPlayer(), "nochunklag.notified.elytraready", "");
+                metaUtils.setMeta(e.getPlayer(), "nochunklag.notified.tridentready", "");
+            }
+        }.runTaskAsynchronously(NoChunkLag.getInstance());
     }
 
     @EventHandler
@@ -78,7 +86,12 @@ public class Listeners implements Listener {
                 public void run() {
                     int timeLeft = e.getCooldown();
                     e.setCooldown(--timeLeft);
+                    if(timeLeft == 0) {
+                        //Clear meta only if cooldown is applicable to player
+                        metaUtils.clearMeta(player, "nochunklag.notified.elytraready");
+                    }
                     if(timeLeft <= 0) {
+                        //Cancel task regardless when it expires
                         this.cancel();
                     }
                 }
@@ -161,7 +174,12 @@ public class Listeners implements Listener {
                 public void run() {
                     int timeLeft = e.getCooldown();
                     e.setCooldown(--timeLeft);
+                    if(timeLeft == 0) {
+                        //Clear meta only if cooldown is applicable to player
+                        metaUtils.clearMeta(player, "nochunklag.notified.tridentready");
+                    }
                     if(timeLeft <= 0) {
+                        //Cancel task regardless when it expires
                         this.cancel();
                     }
                 }
@@ -228,7 +246,7 @@ public class Listeners implements Listener {
             }
 
             //TPS below threshold
-            if(noChunkLag.getTPSTracker().getTps() < configManager.getInt("noboost-tps-treshold")) {
+            if(TrackTPSTask.getInstance().getTps() < configManager.getInt("noboost-tps-treshold")) {
                 ChatUtils.sendActionBar(player, messagesManager.getString("low-tps"));
                 return;
             }

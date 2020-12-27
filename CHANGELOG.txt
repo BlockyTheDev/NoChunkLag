@@ -29,3 +29,8 @@
 2.0.0:
 - Complete rewrite
 - Changed plugin name to NoChunkLag
+
+2.1.0:
+- Added command to reload config.yml and messages.yml
+- Added notifications to admins when boosting is disabled due to low TPS
+- Added notifications to players when they are able to boost again

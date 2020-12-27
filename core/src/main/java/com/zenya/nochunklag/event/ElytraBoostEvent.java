@@ -5,6 +5,7 @@ import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.cooldown.CooldownManager;
 import com.zenya.nochunklag.cooldown.CooldownType;
+import com.zenya.nochunklag.scheduler.TrackTPSTask;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -13,7 +14,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ElytraBoostEvent extends Event implements Cancellable {
-    private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
     private static ConfigManager configManager = ConfigManager.getInstance();
     private static CooldownManager cdm = CooldownManager.getInstance();
 
@@ -67,7 +67,7 @@ public class ElytraBoostEvent extends Event implements Cancellable {
         //Not on cooldown
         if(getCooldown() < 1) {
             //TPS above threshold
-            if(noChunkLag.getTPSTracker().getTps() > configManager.getInt("noboost-tps-treshold")) {
+            if(TrackTPSTask.getInstance().getTps() > configManager.getInt("noboost-tps-treshold")) {
                 return true;
             }
         }
