@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 
 public class PermissionManager {
-    private static ConfigManager configManager = ConfigManager.getInstance();
     private Player player;
     private CooldownType cooldownType;
 
@@ -18,7 +17,7 @@ public class PermissionManager {
 
     public ArrayList<String> getGroups() {
         ArrayList<String> groups = new ArrayList<String>();
-        groups.addAll(configManager.getKeys("groups"));
+        groups.addAll(ConfigManager.getInstance().getKeys("groups"));
         return groups;
     }
 
@@ -33,12 +32,12 @@ public class PermissionManager {
     }
 
     public int getGroupCooldown() {
-        return configManager.getInt("groups." + getGroup() + ".cooldowns." + cooldownType.toString().replace('_', '-').toLowerCase());
+        return ConfigManager.getInstance().getInt("groups." + getGroup() + ".cooldowns." + cooldownType.toString().replace('_', '-').toLowerCase());
     }
 
     //Magic numbers ._.
     public double getGroupSpeedMultiplier() {
-        double baseMultiplier = configManager.getDouble( "groups." + getGroup() + ".speed-multiplier." + cooldownType.toString().replace('_', '-').toLowerCase());
+        double baseMultiplier = ConfigManager.getInstance().getDouble( "groups." + getGroup() + ".speed-multiplier." + cooldownType.toString().replace('_', '-').toLowerCase());
         switch(cooldownType) {
             case ELYTRA_BOOST:
                 return baseMultiplier * 1.5d;
@@ -50,6 +49,6 @@ public class PermissionManager {
     }
 
     public int getGroupDurabilityLoss() {
-        return configManager.getInt("groups." + getGroup() + ".additional-durability-loss." + cooldownType.toString().replace('_', '-').toLowerCase());
+        return ConfigManager.getInstance().getInt("groups." + getGroup() + ".additional-durability-loss." + cooldownType.toString().replace('_', '-').toLowerCase());
     }
 }

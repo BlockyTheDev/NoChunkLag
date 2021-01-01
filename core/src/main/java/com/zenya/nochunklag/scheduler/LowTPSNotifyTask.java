@@ -10,13 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.IOException;
-
 public class LowTPSNotifyTask implements NCLTask {
     private static LowTPSNotifyTask nclTask;
     private BukkitTask bukkitTask;
-    private ConfigManager configManager = ConfigManager.getInstance();
-    private MessagesManager messagesManager = MessagesManager.getInstance();
     private MetaUtils metaUtils = MetaUtils.getInstance();
     private TrackTPSTask trackTPSTask = TrackTPSTask.getInstance();
 
@@ -34,18 +30,18 @@ public class LowTPSNotifyTask implements NCLTask {
         bukkitTask = new BukkitRunnable() {
             @Override
             public void run() {
-                float tps = trackTPSTask.getTps();
+                float tps = trackTPSTask.getAverageTps();
 
                 for(Player player : Bukkit.getOnlinePlayers()) {
                     if(player.hasPermission("nochunklag.notify.lowtps")) {
-                        if(tps < configManager.getInt("noboost-tps-treshold") && !metaUtils.hasMeta(player, "nochunklag.notified.lowtps")) {
-                            ChatUtils.sendMessage(player, messagesManager.getString("notifications.admin.tps-low"));
+                        if(tps < ConfigManager.getInstance().getInt("noboost-tps-treshold") && !metaUtils.hasMeta(player, "nochunklag.notified.lowtps")) {
+                            ChatUtils.sendMessage(player, MessagesManager.getInstance().getString("notifications.admin.tps-low"));
                             metaUtils.setMeta(player, "nochunklag.notified.lowtps", "");
                             metaUtils.clearMeta(player, "nochunklag.notified.regtps");
                         }
 
-                        if(tps > configManager.getInt("noboost-tps-treshold") && !metaUtils.hasMeta(player, "nochunklag.notified.regtps")) {
-                            ChatUtils.sendMessage(player, messagesManager.getString("notifications.admin.tps-regular"));
+                        if(tps > ConfigManager.getInstance().getInt("noboost-tps-treshold") && !metaUtils.hasMeta(player, "nochunklag.notified.regtps")) {
+                            ChatUtils.sendMessage(player, MessagesManager.getInstance().getString("notifications.admin.tps-regular"));
                             metaUtils.setMeta(player, "nochunklag.notified.regtps", "");
                             metaUtils.clearMeta(player, "nochunklag.notified.lowtps");
                         }

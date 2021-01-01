@@ -5,7 +5,6 @@ import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.cooldown.CooldownManager;
 import com.zenya.nochunklag.cooldown.CooldownType;
 import com.zenya.nochunklag.nms.ActionBar;
-import com.zenya.nochunklag.scheduler.TaskManager;
 import com.zenya.nochunklag.scheduler.TrackTPSTask;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,7 +26,13 @@ public class ChatUtils {
         message = translateColor(message);
         message = message.replaceAll("%cooldown_elytra%", cdm.getTimer(CooldownType.ELYTRA_BOOST).getCooldown(player).toString());
         message = message.replaceAll("%cooldown_trident%", cdm.getTimer(CooldownType.TRIDENT_RIPTIDE).getCooldown(player).toString());
-        message = message.replaceAll("%tps%", Float.toString(TrackTPSTask.getInstance().getTps()));
+        message = message.replaceAll("%tps%", Float.toString(TrackTPSTask.getInstance().getAverageTps()));
+        return message;
+    }
+
+    private static String parseSimpleMessage(String message) {
+        message = translateColor(message);
+        message = message.replaceAll("%tps%", Float.toString(TrackTPSTask.getInstance().getAverageTps()));
         return message;
     }
 
@@ -41,14 +46,14 @@ public class ChatUtils {
     public static void sendMessage(CommandSender sender, String message) {
         if(message == "") return;
 
-        message = translateColor(message);
+        message = parseSimpleMessage(message);
         sender.sendMessage(message);
     }
 
     public static void sendBroadcast(String message) {
         if(message == "") return;
 
-        message = translateColor(message);
+        message = parseSimpleMessage(message);
 
         for(Player player : Bukkit.getServer().getOnlinePlayers()) {
             player.sendMessage(message);
@@ -58,7 +63,7 @@ public class ChatUtils {
     public static void sendProtectedBroadcast(List<String> permissions, String message) {
         if(message == "") return;
 
-        message = translateColor(message);
+        message = parseSimpleMessage(message);
 
         for(Player player : Bukkit.getServer().getOnlinePlayers()) {
             for(String permission : permissions) {
@@ -96,7 +101,7 @@ public class ChatUtils {
     public static void sendActionBarToAll(String text) {
         if(text == "") return;
 
-        text = translateColor(text);
+        text = parseSimpleMessage(text);
         actionBar.sendToAll(text);
     }
 }

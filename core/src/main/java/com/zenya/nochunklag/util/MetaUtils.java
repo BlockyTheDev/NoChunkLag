@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
 public class MetaUtils {
-
     private static MetaUtils metaUtils;
 
     public boolean hasMeta(Player player, String meta) {

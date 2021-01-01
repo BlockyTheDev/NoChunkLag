@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 
 public class CompatibilityHandler {
     private static CompatibilityHandler compatibilityHandler;
-    private final String PACKAGE_DOMAIN = "com.zenya.nochunklag.nms.";
-    private final String CLASS_NAME = ".ProtocolNMSImpl";
+    private static final String PACKAGE_DOMAIN = "com.zenya.nochunklag.nms.";
+    private static final String CLASS_NAME = ".ProtocolNMSImpl";
 
-    public String getVersion() {
+    public static String getVersion() {
         /*
         1.8 - v1_8_R3
         1.9 - v1_9_R2
@@ -24,11 +24,11 @@ public class CompatibilityHandler {
         return version;
     }
 
-    public int getProtocol() {
+    public static int getProtocol() {
         return Integer.parseInt(getVersion().split("_")[1]);
     }
 
-    public Class<? extends ProtocolNMS> getProtocolNMS() throws ClassNotFoundException {
+    public static Class<? extends ProtocolNMS> getProtocolNMS() throws ClassNotFoundException {
         return (Class<? extends ProtocolNMS>) Class.forName(PACKAGE_DOMAIN + getVersion() + CLASS_NAME);
     }
 

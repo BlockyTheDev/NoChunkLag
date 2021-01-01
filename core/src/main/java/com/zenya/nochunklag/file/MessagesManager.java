@@ -16,11 +16,14 @@ public class MessagesManager {
 
     private static MessagesManager messagesManager;
     private Plugin plugin = NoChunkLag.getInstance();
-    private File messagesFile = new File(plugin.getDataFolder(), "messages.yml");
-    private FileConfiguration messages = YamlConfiguration.loadConfiguration(messagesFile);
     private FileConfiguration origMessages = YamlConfiguration.loadConfiguration(new InputStreamReader(plugin.getResource("messages.yml")));
+    private File messagesFile;
+    private FileConfiguration messages;
 
     public MessagesManager() throws IOException {
+        messagesFile = new File(plugin.getDataFolder(), "messages.yml");
+        messages = YamlConfiguration.loadConfiguration(messagesFile);
+
         if(!getMessagesExists()) {
             origMessages.save(messagesFile);
             return;

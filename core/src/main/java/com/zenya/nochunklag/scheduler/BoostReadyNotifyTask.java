@@ -11,12 +11,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.io.IOException;
-
 public class BoostReadyNotifyTask implements NCLTask {
     private static BoostReadyNotifyTask nclTask;
     private BukkitTask bukkitTask;
-    private MessagesManager messagesManager = MessagesManager.getInstance();
     private MetaUtils metaUtils = MetaUtils.getInstance();
     private static CooldownManager cdm = CooldownManager.getInstance();
 
@@ -38,12 +35,12 @@ public class BoostReadyNotifyTask implements NCLTask {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (player.hasPermission("nochunklag.notify.boostready")) {
                         if (cdm.getTimer(CooldownType.ELYTRA_BOOST).getCooldown(player).equals(0) && !metaUtils.hasMeta(player, "nochunklag.notified.elytraready")) {
-                            ChatUtils.sendActionBar(player, messagesManager.getString("notifications.player.elytra-boost-ready"));
+                            ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("notifications.player.elytra-boost-ready"));
                             metaUtils.setMeta(player, "nochunklag.notified.elytraready", "");
                         }
 
                         if (cdm.getTimer(CooldownType.TRIDENT_RIPTIDE).getCooldown(player).equals(0) && !metaUtils.hasMeta(player, "nochunklag.notified.tridentready")) {
-                            ChatUtils.sendActionBar(player, messagesManager.getString("notifications.player.trident-riptide-ready"));
+                            ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("notifications.player.trident-riptide-ready"));
                             metaUtils.setMeta(player, "nochunklag.notified.tridentready", "");
                         }
                     }

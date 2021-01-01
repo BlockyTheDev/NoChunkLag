@@ -4,10 +4,13 @@ import com.zenya.nochunklag.NoChunkLag;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
+
 public class TrackTPSTask implements NCLTask {
     private static TrackTPSTask nclTask;
     private BukkitTask bukkitTask;
-    private float tps = 0;
+    private float instTps = 0;
+    private float avgTps = 0;
 
     public TrackTPSTask() {
         runTask();
@@ -31,13 +34,30 @@ public class TrackTPSTask implements NCLTask {
                 long tdiff = now - start;
 
                 if(tdiff > 0) {
-                    tps = (float) (1000/tdiff);
-                }
-                if(tps > 20.0f) {
-                    tps = 20.0f;
+                    instTps = (float) (1000/tdiff);
                 }
             }
         }.runTaskTimer(NoChunkLag.getInstance(), 0, 1);
+
+        //Task to populate avgTps
+        new BukkitRunnable() {
+            ArrayList<Float> tpsList = new ArrayList<Float>();
+
+            @Override
+            public void run() {
+                Float totalTps = 0f;
+
+                tpsList.add(instTps);
+                //Remove old tps after 15s
+                if(tpsList.size() >= 15) {
+                    tpsList.remove(0);
+                }
+                for(Float f : tpsList) {
+                    totalTps += f;
+                }
+                avgTps = totalTps / tpsList.size();
+            }
+        }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 20, 20);
     }
 
     @Override
@@ -45,8 +65,18 @@ public class TrackTPSTask implements NCLTask {
         return bukkitTask;
     }
 
-    public float getTps() {
-        return tps;
+    public float getInstantTps() {
+        if(instTps > 20.0f) {
+            instTps = 20.0f;
+        }
+        return instTps;
+    }
+
+    public float getAverageTps() {
+        if(avgTps > 20.0f) {
+            avgTps = 20.0f;
+        }
+        return avgTps;
     }
 
     public static TrackTPSTask getInstance() {

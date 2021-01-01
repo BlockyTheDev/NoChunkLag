@@ -1,7 +1,8 @@
 package com.zenya.nochunklag;
 
 import com.zenya.nochunklag.command.NoChunkLagCommand;
-import com.zenya.nochunklag.event.Listeners;
+import com.zenya.nochunklag.event.LegacyListeners;
+import com.zenya.nochunklag.event.ModernListeners;
 import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.file.MessagesManager;
 import com.zenya.nochunklag.nms.CompatibilityHandler;
@@ -13,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class NoChunkLag extends JavaPlugin {
     private static NoChunkLag instance;
-    private static CompatibilityHandler compatibilityHandler = CompatibilityHandler.getInstance();
     private static ProtocolNMS protocolNMS;
 
     public void onEnable() {
@@ -21,10 +21,10 @@ public class NoChunkLag extends JavaPlugin {
 
         //Set NMS version
         try {
-            protocolNMS = compatibilityHandler.getProtocolNMS().newInstance();
+            protocolNMS = CompatibilityHandler.getProtocolNMS().newInstance();
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "Spigot NMS version " + compatibilityHandler.getVersion() + " is not supported by NoChunkLag");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "Spigot NMS version " + CompatibilityHandler.getVersion() + " is not supported by NoChunkLag");
             Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
 
@@ -36,7 +36,11 @@ public class NoChunkLag extends JavaPlugin {
         MessagesManager.getInstance();
 
         //Register events
-        this.getServer().getPluginManager().registerEvents(new Listeners(), this);
+        this.getServer().getPluginManager().registerEvents(new LegacyListeners(), this);
+        //PlayerRiptideEvent only available post-aquatic update (>=1.13)
+        if(CompatibilityHandler.getProtocol() >= 13) {
+            this.getServer().getPluginManager().registerEvents(new ModernListeners(), this);
+        }
 
         //Register commands
         this.getCommand("nochunklag").setExecutor(new NoChunkLagCommand());

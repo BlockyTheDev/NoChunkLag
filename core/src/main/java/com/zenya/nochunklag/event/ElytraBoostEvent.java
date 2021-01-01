@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class ElytraBoostEvent extends Event implements Cancellable {
-    private static ConfigManager configManager = ConfigManager.getInstance();
     private static CooldownManager cdm = CooldownManager.getInstance();
 
     private PlayerInteractEvent playerInteractEvent;
@@ -53,8 +52,8 @@ public class ElytraBoostEvent extends Event implements Cancellable {
 
     public boolean isDisabledInWorld() {
         //In bypass world
-        if(configManager.getList("disabled-worlds") != null && configManager.getList("disabled-worlds").size() != 0) {
-            for (String worldname : configManager.getList("disabled-worlds")) {
+        if(ConfigManager.getInstance().getList("disabled-worlds") != null && ConfigManager.getInstance().getList("disabled-worlds").size() != 0) {
+            for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
                 if (getPlayer().getWorld().getName().equals(worldname)) {
                     return true;
                 }
@@ -67,7 +66,7 @@ public class ElytraBoostEvent extends Event implements Cancellable {
         //Not on cooldown
         if(getCooldown() < 1) {
             //TPS above threshold
-            if(TrackTPSTask.getInstance().getTps() > configManager.getInt("noboost-tps-treshold")) {
+            if(TrackTPSTask.getInstance().getAverageTps() > ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
                 return true;
             }
         }

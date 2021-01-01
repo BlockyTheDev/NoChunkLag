@@ -2,9 +2,9 @@ package com.zenya.nochunklag.event;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.zenya.nochunklag.NoChunkLag;
-import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.cooldown.CooldownManager;
 import com.zenya.nochunklag.cooldown.CooldownType;
+import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.scheduler.TrackTPSTask;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -17,7 +17,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TridentRiptideEvent extends Event implements Cancellable {
     private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
-    private static ConfigManager configManager = ConfigManager.getInstance();
     private static CooldownManager cdm = CooldownManager.getInstance();
 
     private PlayerRiptideEvent playerRiptideEvent;
@@ -49,8 +48,8 @@ public class TridentRiptideEvent extends Event implements Cancellable {
 
     public boolean isDisabledInWorld() {
         //In bypass world
-        if(configManager.getList("disabled-worlds") != null && configManager.getList("disabled-worlds").size() != 0) {
-            for (String worldname : configManager.getList("disabled-worlds")) {
+        if(ConfigManager.getInstance().getList("disabled-worlds") != null && ConfigManager.getInstance().getList("disabled-worlds").size() != 0) {
+            for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
                 if (getPlayer().getWorld().getName().equals(worldname)) {
                     return true;
                 }
@@ -63,10 +62,10 @@ public class TridentRiptideEvent extends Event implements Cancellable {
         //Not on cooldown
         if (getCooldown() < 1) {
             //TPS above threshold
-            if (TrackTPSTask.getInstance().getTps() > configManager.getInt("noboost-tps-treshold")) {
+            if (TrackTPSTask.getInstance().getAverageTps() > ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
                 //Not wearing elytra or has bypass permission
                 try {
-                    if(!getPlayer().getInventory().getChestplate().getType().equals(XMaterial.ELYTRA.parseMaterial()) || getPlayer().hasPermission(configManager.getString("elytra-riptide-permission"))) {
+                    if(!getPlayer().getInventory().getChestplate().getType().equals(XMaterial.ELYTRA.parseMaterial()) || getPlayer().hasPermission(ConfigManager.getInstance().getString("elytra-riptide-permission"))) {
                         return true;
                     }
                 } catch (NullPointerException ex) {

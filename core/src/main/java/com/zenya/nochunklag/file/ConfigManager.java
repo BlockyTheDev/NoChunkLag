@@ -17,10 +17,14 @@ public class ConfigManager {
 
     private static ConfigManager configManager;
     private Plugin plugin = NoChunkLag.getInstance();
-    private FileConfiguration config = plugin.getConfig();
     private FileConfiguration origConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(plugin.getResource("config.yml")));
+    private File configFile;
+    private FileConfiguration config;
 
     public ConfigManager() {
+        configFile = new File(plugin.getDataFolder(), "config.yml");
+        config = YamlConfiguration.loadConfiguration(configFile);
+
         if(!getConfigExists()) {
             plugin.saveDefaultConfig();
             return;
