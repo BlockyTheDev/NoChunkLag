@@ -39,3 +39,6 @@
 - Fixed compatibility issues with Minecraft versions 1.12 and below
 - Made all monitoring features utilise average TPS to account for lag spikes
 - Fixed reload command not working properly
+
+2.1.2
+- Minor fix with internal config manager

@@ -114,7 +114,9 @@ public class ConfigManager {
     public ArrayList<String> getList(String node) {
         ArrayList<String> val = new ArrayList<String>();
         try {
-            val.addAll((Collection<? extends String>) config.getList(node));
+            for(String s : config.getStringList(node)) {
+                val.add(s);
+            }
         } catch(Exception e) {
             val = new ArrayList<String>();
             e.printStackTrace();
