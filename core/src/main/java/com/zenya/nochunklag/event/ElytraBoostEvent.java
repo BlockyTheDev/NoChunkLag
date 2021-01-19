@@ -1,7 +1,6 @@
 package com.zenya.nochunklag.event;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.cooldown.CooldownManager;
 import com.zenya.nochunklag.cooldown.CooldownType;
