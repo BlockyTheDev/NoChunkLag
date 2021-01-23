@@ -48,3 +48,6 @@
 
 2.1.4:
 - Fixed an issue with config not initialising on first plugin load
+
+2.1.5:
+- Patch for an issue in v2.1.4 not being fixed completely

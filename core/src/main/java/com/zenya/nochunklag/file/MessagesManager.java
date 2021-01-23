@@ -36,7 +36,6 @@ public class MessagesManager {
         messagesFile = new File(plugin.getDataFolder(), "messages.yml");
         if(!getMessagesExists()) {
             origMessages.save(messagesFile);
-            return;
         }
         messages = YamlConfiguration.loadConfiguration(messagesFile);
 

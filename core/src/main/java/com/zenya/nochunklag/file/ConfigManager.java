@@ -38,7 +38,6 @@ public class ConfigManager {
         configFile = new File(plugin.getDataFolder(), "config.yml");
         if(!getConfigExists()) {
             plugin.saveDefaultConfig();
-            return;
         }
         config = YamlConfiguration.loadConfiguration(configFile);
 
