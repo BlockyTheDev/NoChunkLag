@@ -20,6 +20,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- fallback protocol implementation -->
+        <dependency>
+            <groupId>com.zenya.nochunklag</groupId>
+            <artifactId>fallback</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- 1_9_R2 protocol implementation -->
         <dependency>
             <groupId>com.zenya.nochunklag</groupId>

@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MessagesManager {
     //Change this when updating messages
-    private int messagesVersion = 2;
+    private int messagesVersion = 3;
     //Change this if messages should reset when updating
     private boolean resetMessages = false;
     //These nodes will use the latest resource config's values

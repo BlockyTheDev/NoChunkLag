@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial;
 import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.cooldown.CooldownType;
 import com.zenya.nochunklag.file.MessagesManager;
+import com.zenya.nochunklag.scheduler.TrackCooldownTask;
 import com.zenya.nochunklag.util.ChatUtils;
 import com.zenya.nochunklag.util.MetaUtils;
 import com.zenya.nochunklag.util.PermissionManager;
@@ -69,21 +70,7 @@ public class LegacyListeners implements Listener {
 
             //Enforce cooldown
             e.setCooldown(pm.getGroupCooldown());
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    int timeLeft = e.getCooldown();
-                    e.setCooldown(--timeLeft);
-                    if(timeLeft == 0) {
-                        //Clear meta only if cooldown is applicable to player
-                        metaUtils.clearMeta(player, "nochunklag.notified.elytraready");
-                    }
-                    if(timeLeft <= 0) {
-                        //Cancel task regardless when it expires
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 0, 20);
+            new TrackCooldownTask(e);
 
             //Enforce speed multiplier
             if(pm.getGroupSpeedMultiplier() != 0) {

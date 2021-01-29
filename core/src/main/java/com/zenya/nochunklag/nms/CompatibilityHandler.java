@@ -1,6 +1,7 @@
 package com.zenya.nochunklag.nms;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 public class CompatibilityHandler {
     private static CompatibilityHandler compatibilityHandler;
@@ -29,7 +30,13 @@ public class CompatibilityHandler {
     }
 
     public static Class<? extends ProtocolNMS> getProtocolNMS() throws ClassNotFoundException {
-        return (Class<? extends ProtocolNMS>) Class.forName(PACKAGE_DOMAIN + getVersion() + CLASS_NAME);
+        try {
+            return (Class<? extends ProtocolNMS>) Class.forName(PACKAGE_DOMAIN + getVersion() + CLASS_NAME);
+        } catch (ClassNotFoundException e) {
+            Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED + "You are running NoChunkLag on an unsupported NMS version " + getVersion());
+            Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED + "Some features like actionbar messages may be disabled or broken");
+            return (Class<? extends ProtocolNMS>) Class.forName(PACKAGE_DOMAIN + "fallback" + CLASS_NAME);
+        }
     }
 
     public static CompatibilityHandler getInstance() {

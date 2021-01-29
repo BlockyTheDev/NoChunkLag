@@ -22,10 +22,8 @@ public class NoChunkLag extends JavaPlugin {
         //Set NMS version
         try {
             protocolNMS = CompatibilityHandler.getProtocolNMS().newInstance();
-        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException e) {
             e.printStackTrace();
-            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "Spigot NMS version " + CompatibilityHandler.getVersion() + " is not supported by NoChunkLag");
-            Bukkit.getServer().getPluginManager().disablePlugin(this);
         }
 
         //Register all runnables

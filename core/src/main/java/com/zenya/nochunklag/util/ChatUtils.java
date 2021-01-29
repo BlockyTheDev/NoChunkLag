@@ -80,7 +80,7 @@ public class ChatUtils {
 
         title = parseMessage(player, title);
         player.resetTitle();
-        player.sendTitle(title, null, 10, 40, 20);
+        player.sendTitle(title, "");
     }
 
     public static void sendSubtitle(Player player, String subtitle) {
@@ -88,7 +88,7 @@ public class ChatUtils {
 
         subtitle = parseMessage(player, subtitle);
         player.resetTitle();
-        player.sendTitle(null, subtitle, 0, 10, 0);
+        player.sendTitle("", subtitle);
     }
 
     public static void sendActionBar(Player player, String text) {

@@ -1,4 +1,4 @@
-package com.zenya.nochunklag.nms.v1_16_R3;
+package com.zenya.nochunklag.nms.fallback;
 
 import com.zenya.nochunklag.nms.ActionBar;
 import com.zenya.nochunklag.nms.ProtocolNMS;

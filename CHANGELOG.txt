@@ -51,3 +51,8 @@
 
 2.1.5:
 - Patch for an issue in v2.1.4 not being fixed completely
+
+2.2.0:
+- Added a feature to scale boost cooldowns according to TPS
+- Added a fallback protocol for unsupported NMS versions
+- Changed a few default messages in messages.yml

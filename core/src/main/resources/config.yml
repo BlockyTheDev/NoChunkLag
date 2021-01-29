@@ -1,6 +1,6 @@
 # Config wiki and help can be found at https://gitlab.com/Zenya4/no-chunk-lag/-/blob/master/core/src/main/resources/config.yml
 # For internal reference only, do not change the config version
-config-version: 2
+config-version: 3
 
 # Permission node to allow players to use an elytra + trident with riptide
 # WARNING: This allows players to travel at extremely high speeds when it is raining
@@ -14,6 +14,11 @@ disabled-worlds:
 
 # Elytra boosting and trident riptide will be blocked no matter what when server TPS falls below this value
 noboost-tps-treshold: 15
+
+# Whether or not the cooldown timer should be dependent on server TPS
+# For example, if TPS is 10, all cooldown timers will take (20/10)=2x longer
+# Disable for better performance (async timer thread)
+tps-scale-cooldown: false
 
 groups:
   # Default group, players with no special permissions will use these values
