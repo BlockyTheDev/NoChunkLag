@@ -1,6 +1,6 @@
 # Config wiki and help can be found at https://gitlab.com/Zenya4/no-chunk-lag/-/blob/master/core/src/main/resources/config.yml
 # For internal reference only, do not change the config version
-config-version: 3
+config-version: 4
 
 # Permission node to allow players to use an elytra + trident with riptide
 # WARNING: This allows players to travel at extremely high speeds when it is raining
@@ -12,8 +12,12 @@ disabled-worlds:
   - "testworld"
   - "nolimits"
 
+# How many TPS values to include in the NoChunkLag's average TPS calculation
+# Larger values will result in a more accurate average TPS but may lead to poor performance
+tps-update-interval: 15
+
 # Elytra boosting and trident riptide will be blocked no matter what when server TPS falls below this value
-noboost-tps-treshold: 15
+noboost-tps-treshold: 12
 
 # Whether or not the cooldown timer should be dependent on server TPS
 # For example, if TPS is 10, all cooldown timers will take (20/10)=2x longer

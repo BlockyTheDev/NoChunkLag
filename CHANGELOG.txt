@@ -56,3 +56,8 @@
 - Added a feature to scale boost cooldowns according to TPS
 - Added a fallback protocol for unsupported NMS versions
 - Changed a few default messages in messages.yml
+
+2.2.1:
+- Made average TPS calculation duration configurable
+- Fixed a compatibility issue where 1.16.x servers were using fallback title messages instead of actionbar
+- Changed some default config values

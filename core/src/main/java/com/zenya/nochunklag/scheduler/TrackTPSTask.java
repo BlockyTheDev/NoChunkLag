@@ -1,6 +1,7 @@
 package com.zenya.nochunklag.scheduler;
 
 import com.zenya.nochunklag.NoChunkLag;
+import com.zenya.nochunklag.file.ConfigManager;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -48,8 +49,8 @@ public class TrackTPSTask implements NCLTask {
                 Float totalTps = 0f;
 
                 tpsList.add(instTps);
-                //Remove old tps after 15s
-                if(tpsList.size() >= 15) {
+                //Remove old tps after n seconds
+                if(tpsList.size() >= ConfigManager.getInstance().getInt("tps-update-interval")) {
                     tpsList.remove(0);
                 }
                 for(Float f : tpsList) {
