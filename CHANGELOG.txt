@@ -61,3 +61,6 @@
 - Made average TPS calculation duration configurable
 - Fixed a compatibility issue where 1.16.x servers were using fallback title messages instead of actionbar
 - Changed some default config values
+
+2.2.2:
+- Improved compatibility for minor Minecraft versions

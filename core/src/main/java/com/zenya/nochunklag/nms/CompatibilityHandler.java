@@ -4,21 +4,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class CompatibilityHandler {
-    private static CompatibilityHandler compatibilityHandler;
     private static final String PACKAGE_DOMAIN = "com.zenya.nochunklag.nms.";
     private static final String CLASS_NAME = ".ProtocolNMSImpl";
 
     public static String getVersion() {
         /*
-        1.8 - v1_8_R3
-        1.9 - v1_9_R2
-        1.10 - v1_10_R1
-        1.11 - v1_11_R1
-        1.12 - v1_12_R1
-        1.13 - v1_13_R2
-        1.14 - v1_14_R1
-        1.15 - v1_15_R1
-        1.16 - v1_16_R3
+        1.9.2 - v1_9_R1
+        1.9.4 - v1_9_R2
+        1.10.2 - v1_10_R1
+        1.11.2 - v1_11_R1
+        1.12.2 - v1_12_R1
+        1.13 - v1_13_R1
+        1.13.2 - v1_13_R2
+        1.14.4 - v1_14_R1
+        1.15.2 - v1_15_R1
+        1.16.1 - v1_16_R1
+        1.16.3 - v1_16_R2
+        1.16.5 - v1_16_R3
         */
         String name = Bukkit.getServer().getClass().getPackage().getName();
         String version = name.substring(name.lastIndexOf('.') + 1);
@@ -37,12 +39,5 @@ public class CompatibilityHandler {
             Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED + "Some features like actionbar messages may be disabled or broken");
             return (Class<? extends ProtocolNMS>) Class.forName(PACKAGE_DOMAIN + "fallback" + CLASS_NAME);
         }
-    }
-
-    public static CompatibilityHandler getInstance() {
-        if(compatibilityHandler == null) {
-            compatibilityHandler = new CompatibilityHandler();
-        }
-        return compatibilityHandler;
     }
 }
