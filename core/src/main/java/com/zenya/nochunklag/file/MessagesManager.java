@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MessagesManager {
     //Change this when updating messages
-    private int messagesVersion = 3;
+    private int messagesVersion = 4;
     //Change this if messages should reset when updating
     private boolean resetMessages = false;
     //These nodes will use the latest resource config's values
@@ -50,7 +50,6 @@ public class MessagesManager {
             //Refresh file
             messagesFile.delete();
             origMessages.save(messagesFile);
-            messagesFile = new File(plugin.getDataFolder(), "messages.yml");
             messages = YamlConfiguration.loadConfiguration(messagesFile);
 
             //Add old values

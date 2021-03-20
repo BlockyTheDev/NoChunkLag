@@ -5,7 +5,7 @@ import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.cooldown.CooldownType;
 import com.zenya.nochunklag.file.MessagesManager;
 import com.zenya.nochunklag.scheduler.TrackCooldownTask;
-import com.zenya.nochunklag.util.ChatUtils;
+import com.zenya.nochunklag.util.ChatBuilder;
 import com.zenya.nochunklag.util.MetaUtils;
 import com.zenya.nochunklag.util.PermissionManager;
 import org.bukkit.Bukkit;
@@ -24,16 +24,15 @@ import java.util.Random;
 
 public class LegacyListeners implements Listener {
     private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
-    private static MetaUtils metaUtils = MetaUtils.getInstance();
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                metaUtils.setMeta(e.getPlayer(), "nochunklag.notified.regtps", "");
-                metaUtils.setMeta(e.getPlayer(), "nochunklag.notified.elytraready", "");
-                metaUtils.setMeta(e.getPlayer(), "nochunklag.notified.tridentready", "");
+                MetaUtils.setMeta(e.getPlayer(), "nochunklag.notified.regtps", "");
+                MetaUtils.setMeta(e.getPlayer(), "nochunklag.notified.elytraready", "");
+                MetaUtils.setMeta(e.getPlayer(), "nochunklag.notified.tridentready", "");
             }
         }.runTaskAsynchronously(NoChunkLag.getInstance());
     }
@@ -61,10 +60,18 @@ public class LegacyListeners implements Listener {
     @EventHandler
     public void onElytraBoostEvent(ElytraBoostEvent e) {
         Player player = e.getPlayer();
+        ChatBuilder chat = new ChatBuilder().withPlayer(player).withWorld(player.getWorld());
         PermissionManager pm = new PermissionManager(player, CooldownType.ELYTRA_BOOST);
 
         //Disable limits in disabled worlds
         if(e.isDisabledInWorld()) return;
+
+        //Block boosting in disallowed worlds
+        if(e.isDisallowedInWorld()) {
+            e.setCancelled(true);
+            chat.withText(MessagesManager.getInstance().getString("disallowed-in-world")).sendActionBar();
+            return;
+        }
 
         if(e.isCanBoost()) {
 
@@ -122,12 +129,12 @@ public class LegacyListeners implements Listener {
 
             //On cooldown
             if(e.getCooldown() > 0) {
-                ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("cooldowns.elytra-boost"));
+                chat.withText(MessagesManager.getInstance().getString("cooldowns.elytra-boost")).sendActionBar();
                 return;
             }
 
             //TPS below threshold
-            ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("low-tps"));
+            chat.withText(MessagesManager.getInstance().getString("low-tps")).sendActionBar();
             return;
         }
     }

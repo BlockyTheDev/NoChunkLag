@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ConfigManager {
     //Change this when updating config
-    private int configVersion = 4;
+    private int configVersion = 5;
     //Change this if config should reset when updating
     private boolean resetConfig = false;
     //These nodes will use the latest resource config's values
@@ -52,7 +52,6 @@ public class ConfigManager {
             //Refresh file
             configFile.delete();
             plugin.saveDefaultConfig();
-            configFile = new File(plugin.getDataFolder(), "config.yml");
             config = YamlConfiguration.loadConfiguration(configFile);
 
             //Add old values
@@ -73,7 +72,6 @@ public class ConfigManager {
     }
 
     private boolean getConfigExists() {
-        File configFile = new File(plugin.getDataFolder(), "config.yml");
         return configFile.exists();
     }
 

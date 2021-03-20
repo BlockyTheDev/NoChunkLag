@@ -1,6 +1,6 @@
 name: NoChunkLag
 main: com.zenya.nochunklag.NoChunkLag
-version: 2.2.2
+version: 2.3.0
 author: Zenya4
 description: Eliminate lag from chunk generation by limiting travel speeds
 api-version: 1.13

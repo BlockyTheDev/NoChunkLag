@@ -5,7 +5,6 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CooldownTimer {
-    //private CooldownTimer timer;
     private HashMap<Player, Integer> cooldowns = new HashMap<Player, Integer>();
 
     public void setCooldown(Player player, Integer timeLeft) {
@@ -19,11 +18,4 @@ public class CooldownTimer {
     public Integer getCooldown(Player player) {
         return cooldowns.getOrDefault(player, 0);
     }
-
-/*    public CooldownTimer getInstance() {
-        if(timer == null) {
-            timer = new CooldownTimer();
-        }
-        return timer;
-    }*/
 }

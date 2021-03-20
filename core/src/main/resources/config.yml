@@ -1,6 +1,6 @@
 # Config wiki and help can be found at https://gitlab.com/Zenya4/no-chunk-lag/-/blob/master/core/src/main/resources/config.yml
 # For internal reference only, do not change the config version
-config-version: 4
+config-version: 5
 
 # Permission node to allow players to use an elytra + trident with riptide
 # WARNING: This allows players to travel at extremely high speeds when it is raining
@@ -11,6 +11,11 @@ elytra-riptide-permission: "nochunklag.elytra-riptide.bypass"
 disabled-worlds:
   - "testworld"
   - "nolimits"
+
+# Worlds which elytra-boosting & trident-riptide are completely disallowed. No one will be able to use them in these worlds
+# World names are cAsE sEnSiTiVe
+disallowed-worlds:
+  - "slowworld"
 
 # How many TPS values to include in the NoChunkLag's average TPS calculation
 # Larger values will result in a more accurate average TPS but may lead to poor performance

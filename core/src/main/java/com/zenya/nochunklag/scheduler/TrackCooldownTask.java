@@ -15,7 +15,6 @@ public class TrackCooldownTask implements NCLTask {
     private static TrackCooldownTask nclTask;
     private BukkitTask bukkitTask;
     private Event event;
-    private static MetaUtils metaUtils = MetaUtils.getInstance();
 
     public TrackCooldownTask(Event event) {
         this.event = event;
@@ -42,7 +41,7 @@ public class TrackCooldownTask implements NCLTask {
                         e.setCooldown(--timeLeft);
                         if(timeLeft == 0) {
                             //Clear meta only if cooldown is applicable to player
-                            metaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.elytraready");
+                            MetaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.elytraready");
                         }
                         if(timeLeft <= 0) {
                             //Cancel task regardless when it expires
@@ -59,7 +58,7 @@ public class TrackCooldownTask implements NCLTask {
                         e.setCooldown(--timeLeft);
                         if(timeLeft == 0) {
                             //Clear meta only if cooldown is applicable to player
-                            metaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.elytraready");
+                            MetaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.elytraready");
                         }
                         if(timeLeft <= 0) {
                             //Cancel task regardless when it expires
@@ -83,7 +82,7 @@ public class TrackCooldownTask implements NCLTask {
                         e.setCooldown(--timeLeft);
                         if(timeLeft == 0) {
                             //Clear meta only if cooldown is applicable to player
-                            metaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.tridentready");
+                            MetaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.tridentready");
                         }
                         if(timeLeft <= 0) {
                             //Cancel task regardless when it expires
@@ -100,7 +99,7 @@ public class TrackCooldownTask implements NCLTask {
                         e.setCooldown(--timeLeft);
                         if(timeLeft == 0) {
                             //Clear meta only if cooldown is applicable to player
-                            metaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.tridentready");
+                            MetaUtils.clearMeta(e.getPlayer(), "nochunklag.notified.tridentready");
                         }
                         if(timeLeft <= 0) {
                             //Cancel task regardless when it expires

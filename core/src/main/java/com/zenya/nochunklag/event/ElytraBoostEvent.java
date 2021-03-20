@@ -61,6 +61,18 @@ public class ElytraBoostEvent extends Event implements Cancellable {
         return false;
     }
 
+    public boolean isDisallowedInWorld() {
+        //In bypass world
+        if(ConfigManager.getInstance().getList("disallowed-worlds") != null && ConfigManager.getInstance().getList("disallowed-worlds").size() != 0) {
+            for (String worldname : ConfigManager.getInstance().getList("disallowed-worlds")) {
+                if (getPlayer().getWorld().getName().equals(worldname)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean isCanBoost() {
         //Not on cooldown
         if(getCooldown() < 1) {

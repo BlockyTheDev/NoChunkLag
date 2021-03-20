@@ -8,8 +8,7 @@ import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.file.MessagesManager;
 import com.zenya.nochunklag.scheduler.TrackCooldownTask;
 import com.zenya.nochunklag.scheduler.TrackTPSTask;
-import com.zenya.nochunklag.util.ChatUtils;
-import com.zenya.nochunklag.util.MetaUtils;
+import com.zenya.nochunklag.util.ChatBuilder;
 import com.zenya.nochunklag.util.PermissionManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -25,7 +24,6 @@ import java.util.Random;
 
 public class ModernListeners implements Listener {
     private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
-    private static MetaUtils metaUtils = MetaUtils.getInstance();
 
     @EventHandler
     public void onPlayerRiptideEvent(PlayerRiptideEvent e) {
@@ -35,10 +33,18 @@ public class ModernListeners implements Listener {
     @EventHandler
     public void onTridentRiptideEvent(TridentRiptideEvent e) {
         Player player = e.getPlayer();
+        ChatBuilder chat = new ChatBuilder().withPlayer(player).withWorld(player.getWorld());
         PermissionManager pm = new PermissionManager(player, CooldownType.TRIDENT_RIPTIDE);
 
         //Disable limits in disabled worlds
         if(e.isDisabledInWorld()) return;
+
+        //Block boosting in disallowed worlds
+        if(e.isDisallowedInWorld()) {
+            e.setCancelled(true);
+            chat.withText(MessagesManager.getInstance().getString("disallowed-in-world")).sendActionBar();;
+            return;
+        }
 
         if(e.isCanBoost()) {
 
@@ -102,18 +108,18 @@ public class ModernListeners implements Listener {
 
             //On cooldown
             if(e.getCooldown() > 0) {
-                ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("cooldowns.trident-riptide"));
+                chat.withText(MessagesManager.getInstance().getString("cooldowns.trident-riptide")).sendActionBar();
                 return;
             }
 
             //TPS below threshold
             if(TrackTPSTask.getInstance().getAverageTps() < ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
-                ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("low-tps"));
+                chat.withText(MessagesManager.getInstance().getString("low-tps")).sendActionBar();
                 return;
             }
 
             //No permission for elytra+riptide
-            ChatUtils.sendActionBar(player, MessagesManager.getInstance().getString("no-elytra-riptide"));
+            chat.withText(MessagesManager.getInstance().getString("no-elytra-riptide")).sendActionBar();
             return;
         }
     }

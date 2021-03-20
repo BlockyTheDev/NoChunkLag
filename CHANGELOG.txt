@@ -64,3 +64,7 @@
 
 2.2.2:
 - Improved compatibility for minor Minecraft versions
+
+2.3.0:
+- Major code cleanup
+- Added config option to completely disallow boosting in specified worlds
