@@ -68,3 +68,6 @@
 2.3.0:
 - Major code cleanup
 - Added config option to completely disallow boosting in specified worlds
+
+2.3.1:
+- Added new placeholders "%elytra_bar%" and "%trident_bar%" for fancy cooldown display

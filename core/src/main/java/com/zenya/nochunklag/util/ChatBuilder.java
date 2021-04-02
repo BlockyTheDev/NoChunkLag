@@ -73,6 +73,8 @@ public class ChatBuilder {
         text = world == null ? text : text.replaceAll("%world%", world.getName());
         text = player == null ? text : text.replaceAll("%player%", player.getName());
         text = player == null ? text : text.replaceAll("%cooldown_elytra%", CDM.getTimer(CooldownType.ELYTRA_BOOST).getCooldown(player).toString());
+        text = player == null ? text : text.replaceAll("%elytra_bar%", timeToBars(player, CooldownType.ELYTRA_BOOST));
+        text = player == null ? text : text.replaceAll("%trident_bar%", timeToBars(player, CooldownType.TRIDENT_RIPTIDE));
         text = player == null ? text : text.replaceAll("%cooldown_trident%", CDM.getTimer(CooldownType.TRIDENT_RIPTIDE).getCooldown(player).toString());
 
         return text;
@@ -105,5 +107,27 @@ public class ChatBuilder {
         if(player != null) {
             ACTION_BAR.send(player, build());
         }
+    }
+
+    public static String timeToBars(Player player, CooldownType type) {
+        PermissionManager pm = new PermissionManager(player, type);
+        int totalDuration = pm.getGroupCooldown();
+        if(totalDuration == 0) return ChatColor.GREEN + "||||||||||";
+        int timeLeft = CDM.getTimer(type).getCooldown(player);
+        int redProgress = Math.round((float) (10*timeLeft/totalDuration)); //counting from the back
+        int greenProgress = 10-redProgress;
+
+        String bar = "";
+        bar += ChatColor.GREEN;
+        for(int i=0; i<greenProgress; i++) {
+            bar += "|";
+        }
+        bar += ChatColor.RED;
+        for(int i=0; i<redProgress; i++) {
+            bar += "|";
+        }
+        bar += ChatColor.RESET;
+
+        return bar;
     }
 }

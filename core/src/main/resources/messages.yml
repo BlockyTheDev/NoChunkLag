@@ -7,8 +7,8 @@ low-tps: '&cThis action has been temporarily blocked to reduce server lag (TPS =
 disallowed-in-world: "&cYou are not allowed to use this action in &4%world%"
 
 cooldowns:
-  elytra-boost: '&cPlease wait &4%cooldown_elytra%&cs before using this again'
-  trident-riptide: '&cPlease wait &4%cooldown_trident%&cs before using this again'
+  elytra-boost: '&cPlease wait &4%cooldown_elytra%&cs before using this again &f[%elytra_bar%&f]'
+  trident-riptide: '&cPlease wait &4%cooldown_trident%&cs before using this again &f[%trident_bar%&f]'
 
 notifications:
   admin:
