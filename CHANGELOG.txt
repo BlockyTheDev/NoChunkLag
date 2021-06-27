@@ -71,3 +71,7 @@
 
 2.3.1:
 - Added new placeholders "%elytra_bar%" and "%trident_bar%" for fancy cooldown display
+
+2.4.0:
+- Added 1.17 support
+- Fixed some version incompatibilities

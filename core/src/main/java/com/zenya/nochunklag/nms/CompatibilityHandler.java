@@ -2,7 +2,6 @@ package com.zenya.nochunklag.nms;
 
 import com.zenya.nochunklag.util.ChatBuilder;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 public class CompatibilityHandler {
     private static final String PACKAGE_DOMAIN = "com.zenya.nochunklag.nms.";
@@ -35,7 +34,7 @@ public class CompatibilityHandler {
     public static Class<? extends ProtocolNMS> getProtocolNMS() throws ClassNotFoundException {
         try {
             return (Class<? extends ProtocolNMS>) Class.forName(PACKAGE_DOMAIN + getVersion() + CLASS_NAME);
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             ChatBuilder chat = new ChatBuilder().withSender(Bukkit.getConsoleSender());
             chat.withText("&4You are running NoChunkLag on an unsupported NMS version " + getVersion()).sendMessage();
             chat.withText("&4Some features like actionbar messages may be disabled or broken").sendMessage();
