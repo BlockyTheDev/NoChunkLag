@@ -75,3 +75,6 @@
 2.4.0:
 - Added 1.17 support
 - Fixed some version incompatibilities
+
+2.4.1:
+- Added an option to toggle breaking elytras when they have 1 durability left

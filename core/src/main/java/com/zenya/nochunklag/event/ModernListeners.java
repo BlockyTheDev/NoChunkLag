@@ -90,7 +90,7 @@ public class ModernListeners implements Listener {
 
             if(!player.getGameMode().equals(GameMode.CREATIVE) && !trident.getItemMeta().isUnbreakable()) {
                 if(trident.getDurability() + duraLoss >= trident.getType().getMaxDurability()) {
-                    trident.setType(XMaterial.AIR.parseMaterial());
+                    trident.setDurability(trident.getType().getMaxDurability());
                 } else {
                     trident.setDurability((short) (trident.getDurability() + duraLoss));
                 }

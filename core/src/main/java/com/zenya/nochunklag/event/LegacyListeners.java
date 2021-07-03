@@ -3,6 +3,7 @@ package com.zenya.nochunklag.event;
 import com.cryptomorin.xseries.XMaterial;
 import com.zenya.nochunklag.NoChunkLag;
 import com.zenya.nochunklag.cooldown.CooldownType;
+import com.zenya.nochunklag.file.ConfigManager;
 import com.zenya.nochunklag.file.MessagesManager;
 import com.zenya.nochunklag.scheduler.TrackCooldownTask;
 import com.zenya.nochunklag.util.ChatBuilder;
@@ -116,7 +117,8 @@ public class LegacyListeners implements Listener {
             }
             if(!player.getGameMode().equals(GameMode.CREATIVE) && !elytra.getItemMeta().isUnbreakable()) {
                 if(elytra.getDurability() + duraLoss >= elytra.getType().getMaxDurability()) {
-                    elytra.setType(XMaterial.AIR.parseMaterial());
+                    int saveElytra = ConfigManager.getInstance().getBool("break-elytra") ? 0 : -1;
+                    elytra.setDurability((short) (elytra.getType().getMaxDurability() + saveElytra));
                 } else {
                     elytra.setDurability((short) (elytra.getDurability() + duraLoss));
                 }

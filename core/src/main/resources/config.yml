@@ -1,6 +1,6 @@
 # Config wiki and help can be found at https://gitlab.com/Zenya4/no-chunk-lag/-/blob/master/core/src/main/resources/config.yml
 # For internal reference only, do not change the config version
-config-version: 5
+config-version: 6
 
 # Permission node to allow players to use an elytra + trident with riptide
 # WARNING: This allows players to travel at extremely high speeds when it is raining
@@ -28,6 +28,10 @@ noboost-tps-treshold: 12
 # For example, if TPS is 10, all cooldown timers will take (20/10)=2x longer
 # Disable for better performance (async timer thread)
 tps-scale-cooldown: false
+
+# Should the plugin automatically remove elytras once they reach 1 durability?
+# Set to false for vanilla elytra behaviour
+break-elytra: false
 
 groups:
   # Default group, players with no special permissions will use these values
