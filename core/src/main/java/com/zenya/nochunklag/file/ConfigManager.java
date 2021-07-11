@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ConfigManager {
     //Change this when updating config
-    private int configVersion = 5;
+    private int configVersion = 6;
     //Change this if config should reset when updating
     private boolean resetConfig = false;
     //These nodes will use the latest resource config's values

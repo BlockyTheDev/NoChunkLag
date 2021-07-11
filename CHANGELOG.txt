@@ -78,3 +78,6 @@
 
 2.4.1:
 - Added an option to toggle breaking elytras when they have 1 durability left
+
+2.4.2:
+- Quick fix with config.yml resetting itself
