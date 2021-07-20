@@ -81,3 +81,6 @@
 
 2.4.2:
 - Quick fix with config.yml resetting itself
+
+2.4.3:
+- Added command tabcomplete feature

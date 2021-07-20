@@ -1,6 +1,7 @@
 package com.zenya.nochunklag;
 
 import com.zenya.nochunklag.command.NoChunkLagCommand;
+import com.zenya.nochunklag.command.NoChunkLagTab;
 import com.zenya.nochunklag.event.LegacyListeners;
 import com.zenya.nochunklag.event.ModernListeners;
 import com.zenya.nochunklag.file.ConfigManager;
@@ -42,6 +43,11 @@ public class NoChunkLag extends JavaPlugin {
 
         //Register commands
         this.getCommand("nochunklag").setExecutor(new NoChunkLagCommand());
+        try {
+            this.getCommand("nochunklag").setTabCompleter(new NoChunkLagTab());
+        } catch(Exception exc) {
+            //Do nothing, version doesn't support tabcomplete
+        }
     }
 
     public void onDisable() {
