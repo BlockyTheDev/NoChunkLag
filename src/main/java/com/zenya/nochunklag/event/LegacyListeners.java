@@ -48,7 +48,11 @@ public class LegacyListeners implements Listener {
       return;
     }
     if (chestplate.getType() == Material.ELYTRA) {
-      if (event.getItem().getType() == Material.FIREWORK_ROCKET) {
+      ItemStack item = event.getItem();
+      if (item == null || item.getType() == Material.AIR) {
+        return;
+      }
+      if (item.getType() == Material.FIREWORK_ROCKET) {
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
           if (player.isGliding()) {
             Bukkit.getServer().getPluginManager().callEvent(new ElytraBoostEvent(event));
