@@ -1,0 +1,45 @@
+name: NoChunkLag
+main: com.zenya.nochunklag.NoChunkLag
+version: ${project.version}
+author: Optic_Fusion1
+description: Eliminate lag from chunk generation by limiting travel speeds
+api-version: 1.18
+
+commands:
+  nochunklag:
+    description: Main command for NoChunkLag
+    aliases:
+      - ncl
+    permission: nochunklag.command.help
+    usage: /<command> [help/reload]
+
+permissions:
+  nochunklag.*:
+    children:
+      nochunklag.command.help: true
+      nochunklag.command.reload: true
+      nochunklag.elytra-riptide.bypass: true
+      nochunklag.notify.lowtps: true
+      nochunklag.notify.boostready: true
+  nochunklag.command.*:
+    children:
+      nochunklag.command.help: true
+      nochunklag.command.reload: true
+  nochunklag.notify.*:
+    children:
+      nochunklag.notify.lowtps: true
+      nochunklag.notify.boostready: true
+  nochunklag.command.help:
+    default: op
+  nochunklag.command.reload:
+    default: op
+  nochunklag.elytra-riptide.bypass:
+    default: op
+  nochunklag.notify.lowtps:
+    default: op
+  nochunklag.notify.boostready:
+    default: true
+  nochunklag.group.default:
+    default: true
+
+
