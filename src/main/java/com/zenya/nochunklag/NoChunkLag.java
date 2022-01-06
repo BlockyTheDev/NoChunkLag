@@ -55,14 +55,14 @@ public class NoChunkLag extends JavaPlugin {
   private void checkForUpdate() {
     Logger logger = getLogger();
     FileConfiguration pluginConfig = getConfig();
-    Updater updater = new Updater(this, 55642, false);
+    Updater updater = new Updater(this, 98913, false);
     Updater.UpdateResult result = updater.getResult();
     if (result != UpdateResult.UPDATE_AVAILABLE) {
       return;
     }
     if (!pluginConfig.getBoolean("download-update")) {
       logger.info("===== UPDATE AVAILABLE ====");
-      logger.info("https://www.spigotmc.org/resources/chatbot-fully-customizable.55642/");
+      logger.info("https://www.spigotmc.org/resources/98913");
       logger.log(Level.INFO, "Installed Version: {0} New Version:{1}", new Object[]{updater.getOldVersion(), updater.getVersion()});
       logger.info("===== UPDATE AVAILABLE ====");
       return;
