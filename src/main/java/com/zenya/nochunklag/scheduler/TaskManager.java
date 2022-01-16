@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class TaskManager {
 
   private static TaskManager taskManager;
-  private HashMap<String, NCLTask> taskMap = new HashMap<String, NCLTask>();
+  private HashMap<String, NCLTask> taskMap = new HashMap<>();
 
   public TaskManager() {
     registerTask(TrackTPSTask.getInstance().getKey(), TrackTPSTask.getInstance());

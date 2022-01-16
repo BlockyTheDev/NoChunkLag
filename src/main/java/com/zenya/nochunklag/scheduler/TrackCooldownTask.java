@@ -9,8 +9,6 @@ import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-
 public class TrackCooldownTask implements NCLTask {
 
   private static TrackCooldownTask nclTask;

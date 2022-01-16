@@ -54,7 +54,7 @@ public class ElytraBoostEvent extends Event implements Cancellable {
 
   public boolean isDisabledInWorld() {
     //In bypass world
-    if (ConfigManager.getInstance().getList("disabled-worlds") != null && ConfigManager.getInstance().getList("disabled-worlds").size() != 0) {
+    if (ConfigManager.getInstance().getList("disabled-worlds") != null && !ConfigManager.getInstance().getList("disabled-worlds").isEmpty()) {
       for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
         if (getPlayer().getWorld().getName().equals(worldname)) {
           return true;
@@ -66,7 +66,7 @@ public class ElytraBoostEvent extends Event implements Cancellable {
 
   public boolean isDisallowedInWorld() {
     //In bypass world
-    if (ConfigManager.getInstance().getList("disallowed-worlds") != null && ConfigManager.getInstance().getList("disallowed-worlds").size() != 0) {
+    if (ConfigManager.getInstance().getList("disallowed-worlds") != null && !ConfigManager.getInstance().getList("disallowed-worlds").isEmpty()) {
       for (String worldname : ConfigManager.getInstance().getList("disallowed-worlds")) {
         if (getPlayer().getWorld().getName().equals(worldname)) {
           return true;

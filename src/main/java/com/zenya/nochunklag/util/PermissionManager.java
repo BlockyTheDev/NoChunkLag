@@ -17,7 +17,7 @@ public class PermissionManager {
   }
 
   public ArrayList<String> getGroups() {
-    ArrayList<String> groups = new ArrayList<String>();
+    ArrayList<String> groups = new ArrayList<>();
     groups.addAll(ConfigManager.getInstance().getKeys("groups"));
     return groups;
   }
@@ -39,14 +39,14 @@ public class PermissionManager {
   //Magic numbers ._.
   public double getGroupSpeedMultiplier() {
     double baseMultiplier = ConfigManager.getInstance().getDouble("groups." + getGroup() + ".speed-multiplier." + cooldownType.toString().replace('_', '-').toLowerCase());
-    switch (cooldownType) {
-      case ELYTRA_BOOST:
-        return baseMultiplier * 1.5d;
-      case TRIDENT_RIPTIDE:
-        return baseMultiplier * 0.65d;
-      default:
-        return baseMultiplier;
-    }
+    return switch (cooldownType) {
+      case ELYTRA_BOOST ->
+        baseMultiplier * 1.5d;
+      case TRIDENT_RIPTIDE ->
+        baseMultiplier * 0.65d;
+      default ->
+        baseMultiplier;
+    };
   }
 
   public int getGroupDurabilityLoss() {

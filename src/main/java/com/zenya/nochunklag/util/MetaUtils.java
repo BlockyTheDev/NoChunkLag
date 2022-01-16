@@ -21,7 +21,7 @@ public class MetaUtils {
   }
 
   public static String getMetaValue(Player player, String meta) {
-    if (!(hasMeta(player, meta)) || player.getMetadata(meta).size() == 0) {
+    if (!(hasMeta(player, meta)) || player.getMetadata(meta).isEmpty()) {
       return "";
     }
     return player.getMetadata(meta).get(0).asString();

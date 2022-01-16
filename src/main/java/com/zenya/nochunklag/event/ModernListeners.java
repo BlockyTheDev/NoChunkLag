@@ -124,7 +124,6 @@ public class ModernListeners implements Listener {
 
       //No permission for elytra+riptide
       chat.withText(MessagesManager.getInstance().getString("no-elytra-riptide")).sendActionBar();
-      return;
     }
   }
 }

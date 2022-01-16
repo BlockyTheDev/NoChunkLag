@@ -70,7 +70,7 @@ public class ConfigManager {
           if (replaceNodes.contains(node)) {
             config.set(node, null);
           }
-          if (oldConfig.getConfigurationSection(node) != null && oldConfig.getConfigurationSection(node).getKeys(false) != null && oldConfig.getConfigurationSection(node).getKeys(false).size() != 0) {
+          if (oldConfig.getConfigurationSection(node) != null && oldConfig.getConfigurationSection(node).getKeys(false) != null && !oldConfig.getConfigurationSection(node).getKeys(false).isEmpty()) {
             continue;
           }
           config.set(node, oldConfig.get(node));
@@ -131,26 +131,26 @@ public class ConfigManager {
   }
 
   public ArrayList<String> getKeys(String node) {
-    ArrayList<String> val = new ArrayList<String>();
+    ArrayList<String> val = new ArrayList<>();
     try {
       for (String key : config.getConfigurationSection(node).getKeys(false)) {
         val.add(key);
       }
     } catch (Exception e) {
-      val = new ArrayList<String>();
+      val = new ArrayList<>();
       e.printStackTrace();
     }
     return val;
   }
 
   public ArrayList<String> getList(String node) {
-    ArrayList<String> val = new ArrayList<String>();
+    ArrayList<String> val = new ArrayList<>();
     try {
       for (String s : config.getStringList(node)) {
         val.add(s);
       }
     } catch (Exception e) {
-      val = new ArrayList<String>();
+      val = new ArrayList<>();
       e.printStackTrace();
     }
     return val;

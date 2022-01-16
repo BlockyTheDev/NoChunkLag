@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessagesManager {
+  
   //Change this when updating messages
-
   private int messagesVersion = 4;
   //Change this if messages should reset when updating
   private boolean resetMessages = false;
