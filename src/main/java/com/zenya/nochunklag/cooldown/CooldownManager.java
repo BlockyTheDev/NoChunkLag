@@ -4,22 +4,20 @@ import java.util.HashMap;
 
 public class CooldownManager {
 
-  private static CooldownManager cdm;
-  private static HashMap<CooldownType, CooldownTimer> cdmMap = new HashMap<>();
+    private static final HashMap<CooldownType, CooldownTimer> COOLDOWN_TIMERS = new HashMap<>();
 
-  public CooldownManager() {
-    cdmMap.put(CooldownType.ELYTRA_BOOST, new CooldownTimer());
-    cdmMap.put(CooldownType.TRIDENT_RIPTIDE, new CooldownTimer());
-  }
-
-  public CooldownTimer getTimer(CooldownType type) {
-    return cdmMap.get(type);
-  }
-
-  public static CooldownManager getInstance() {
-    if (cdm == null) {
-      cdm = new CooldownManager();
+    public CooldownManager() {
+        for (CooldownType type : CooldownType.values()) {
+            addCooldownTimer(type);
+        }
     }
-    return cdm;
-  }
+
+    private void addCooldownTimer(CooldownType type) {
+        COOLDOWN_TIMERS.put(type, new CooldownTimer());
+    }
+
+    public CooldownTimer getTimer(CooldownType type) {
+        return COOLDOWN_TIMERS.get(type);
+    }
+
 }

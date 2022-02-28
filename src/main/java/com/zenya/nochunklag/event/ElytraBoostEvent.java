@@ -14,103 +14,103 @@ import org.bukkit.inventory.ItemStack;
 
 public class ElytraBoostEvent extends Event implements Cancellable {
 
-  private static CooldownManager cdm = CooldownManager.getInstance();
+    private CooldownManager cooldownManager;
+    private PlayerInteractEvent playerInteractEvent;
+    private boolean isCancelled;
 
-  private PlayerInteractEvent playerInteractEvent;
-  private boolean isCancelled;
-
-  public ElytraBoostEvent(PlayerInteractEvent e) {
-    this.playerInteractEvent = e;
-    this.isCancelled = false;
-  }
-
-  public Player getPlayer() {
-    return playerInteractEvent.getPlayer();
-  }
-
-  public ItemStack getElytra() {
-    return getPlayer().getInventory().getChestplate();
-  }
-
-  public ItemStack getFirework() {
-    ItemStack mainHandItem = getPlayer().getInventory().getItemInMainHand();
-    if (mainHandItem.getType() == Material.FIREWORK_ROCKET) {
-      return mainHandItem;
+    public ElytraBoostEvent(CooldownManager cooldownManager, PlayerInteractEvent e) {
+        this.cooldownManager = cooldownManager;
+        this.playerInteractEvent = e;
+        this.isCancelled = false;
     }
-    ItemStack offHandItem = getPlayer().getInventory().getItemInOffHand();
-    if (offHandItem.getType() == Material.FIREWORK_ROCKET) {
-      return offHandItem;
+
+    public Player getPlayer() {
+        return playerInteractEvent.getPlayer();
     }
-    return null;
-  }
 
-  public int getCooldown() {
-    return cdm.getTimer(CooldownType.ELYTRA_BOOST).getCooldown(getPlayer());
-  }
+    public ItemStack getElytra() {
+        return getPlayer().getInventory().getChestplate();
+    }
 
-  public void setCooldown(int time) {
-    cdm.getTimer(CooldownType.ELYTRA_BOOST).setCooldown(getPlayer(), time);
-  }
-
-  public boolean isDisabledInWorld() {
-    //In bypass world
-    if (ConfigManager.getInstance().getList("disabled-worlds") != null && !ConfigManager.getInstance().getList("disabled-worlds").isEmpty()) {
-      for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
-        if (getPlayer().getWorld().getName().equals(worldname)) {
-          return true;
+    public ItemStack getFirework() {
+        ItemStack mainHandItem = getPlayer().getInventory().getItemInMainHand();
+        if (mainHandItem.getType() == Material.FIREWORK_ROCKET) {
+            return mainHandItem;
         }
-      }
-    }
-    return false;
-  }
-
-  public boolean isDisallowedInWorld() {
-    //In bypass world
-    if (ConfigManager.getInstance().getList("disallowed-worlds") != null && !ConfigManager.getInstance().getList("disallowed-worlds").isEmpty()) {
-      for (String worldname : ConfigManager.getInstance().getList("disallowed-worlds")) {
-        if (getPlayer().getWorld().getName().equals(worldname)) {
-          return true;
+        ItemStack offHandItem = getPlayer().getInventory().getItemInOffHand();
+        if (offHandItem.getType() == Material.FIREWORK_ROCKET) {
+            return offHandItem;
         }
-      }
+        return null;
     }
-    return false;
-  }
 
-  public boolean isCanBoost() {
-    //Not on cooldown
-    if (getCooldown() < 1) {
-      //TPS above threshold
-      if (TrackTPSTask.getInstance().getAverageTps() > ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
-        return true;
-      }
+    public int getCooldown() {
+        return cooldownManager.getTimer(CooldownType.ELYTRA_BOOST).getCooldown(getPlayer());
     }
-    return false;
-  }
 
-  @Override
-  public boolean isCancelled() {
-    return this.isCancelled;
-  }
-
-  @Override
-  public void setCancelled(boolean cancelled) {
-    this.isCancelled = cancelled;
-
-    if (isCancelled()) {
-      playerInteractEvent.setCancelled(true);
+    public void setCooldown(int time) {
+        cooldownManager.getTimer(CooldownType.ELYTRA_BOOST).setCooldown(getPlayer(), time);
     }
-  }
 
-  //Default custom event methods
-  private static final HandlerList handlers = new HandlerList();
+    public boolean isDisabledInWorld() {
+        //In bypass world
+        if (ConfigManager.getInstance().getList("disabled-worlds") != null && !ConfigManager.getInstance().getList("disabled-worlds").isEmpty()) {
+            for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
+                if (getPlayer().getWorld().getName().equals(worldname)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    public boolean isDisallowedInWorld() {
+        //In bypass world
+        if (ConfigManager.getInstance().getList("disallowed-worlds") != null && !ConfigManager.getInstance().getList("disallowed-worlds").isEmpty()) {
+            for (String worldname : ConfigManager.getInstance().getList("disallowed-worlds")) {
+                if (getPlayer().getWorld().getName().equals(worldname)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public boolean isCanBoost() {
+        //Not on cooldown
+        if (getCooldown() < 1) {
+            //TPS above threshold
+            if (TrackTPSTask.getInstance().getAverageTps() > ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.isCancelled = cancelled;
+
+        if (isCancelled()) {
+            playerInteractEvent.setCancelled(true);
+        }
+    }
+
+    //Default custom event methods
+    private static final HandlerList handlers = new HandlerList();
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
 }

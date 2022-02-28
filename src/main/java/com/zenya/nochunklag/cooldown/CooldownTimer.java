@@ -6,17 +6,17 @@ import java.util.HashMap;
 
 public class CooldownTimer {
 
-  private HashMap<Player, Integer> cooldowns = new HashMap<>();
+    private HashMap<Player, Integer> cooldowns = new HashMap<>();
 
-  public void setCooldown(Player player, Integer timeLeft) {
-    if (timeLeft < 1) {
-      cooldowns.remove(player);
-    } else {
-      cooldowns.put(player, timeLeft);
+    public void setCooldown(Player player, Integer timeLeft) {
+        if (!(timeLeft < 1)) {
+            cooldowns.put(player, timeLeft);
+            return;
+        }
+        cooldowns.remove(player);
     }
-  }
 
-  public Integer getCooldown(Player player) {
-    return cooldowns.getOrDefault(player, 0);
-  }
+    public Integer getCooldown(Player player) {
+        return cooldowns.getOrDefault(player, 0);
+    }
 }

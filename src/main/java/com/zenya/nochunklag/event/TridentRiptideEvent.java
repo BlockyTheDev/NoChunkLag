@@ -17,107 +17,107 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TridentRiptideEvent extends Event implements Cancellable {
 
-  private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
-  private static CooldownManager cdm = CooldownManager.getInstance();
+    private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
+    private CooldownManager cooldownManager;
+    private PlayerRiptideEvent playerRiptideEvent;
+    private boolean isCancelled;
 
-  private PlayerRiptideEvent playerRiptideEvent;
-  private boolean isCancelled;
-
-  public TridentRiptideEvent(PlayerRiptideEvent e) {
-    this.playerRiptideEvent = e;
-    this.isCancelled = false;
-  }
-
-  public Player getPlayer() {
-    return playerRiptideEvent.getPlayer();
-  }
-
-  public ItemStack getTrident() {
-    if (getPlayer().getInventory().getItemInMainHand().getType() == Material.TRIDENT) {
-      return getPlayer().getInventory().getItemInMainHand();
+    public TridentRiptideEvent(CooldownManager cooldownManager, PlayerRiptideEvent e) {
+        this.cooldownManager = cooldownManager;
+        this.playerRiptideEvent = e;
+        this.isCancelled = false;
     }
-    return getPlayer().getInventory().getItemInOffHand();
-  }
 
-  public int getCooldown() {
-    return cdm.getTimer(CooldownType.TRIDENT_RIPTIDE).getCooldown(getPlayer());
-  }
+    public Player getPlayer() {
+        return playerRiptideEvent.getPlayer();
+    }
 
-  public void setCooldown(int time) {
-    cdm.getTimer(CooldownType.TRIDENT_RIPTIDE).setCooldown(getPlayer(), time);
-  }
-
-  public boolean isDisabledInWorld() {
-    //In bypass world
-    if (ConfigManager.getInstance().getList("disabled-worlds") != null && !ConfigManager.getInstance().getList("disabled-worlds").isEmpty()) {
-      for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
-        if (getPlayer().getWorld().getName().equals(worldname)) {
-          return true;
+    public ItemStack getTrident() {
+        if (getPlayer().getInventory().getItemInMainHand().getType() == Material.TRIDENT) {
+            return getPlayer().getInventory().getItemInMainHand();
         }
-      }
+        return getPlayer().getInventory().getItemInOffHand();
     }
-    return false;
-  }
 
-  public boolean isDisallowedInWorld() {
-    //In bypass world
-    if (ConfigManager.getInstance().getList("disallowed-worlds") != null && !ConfigManager.getInstance().getList("disallowed-worlds").isEmpty()) {
-      for (String worldname : ConfigManager.getInstance().getList("disallowed-worlds")) {
-        if (getPlayer().getWorld().getName().equals(worldname)) {
-          return true;
+    public int getCooldown() {
+        return cooldownManager.getTimer(CooldownType.TRIDENT_RIPTIDE).getCooldown(getPlayer());
+    }
+
+    public void setCooldown(int time) {
+        cooldownManager.getTimer(CooldownType.TRIDENT_RIPTIDE).setCooldown(getPlayer(), time);
+    }
+
+    public boolean isDisabledInWorld() {
+        //In bypass world
+        if (ConfigManager.getInstance().getList("disabled-worlds") != null && !ConfigManager.getInstance().getList("disabled-worlds").isEmpty()) {
+            for (String worldname : ConfigManager.getInstance().getList("disabled-worlds")) {
+                if (getPlayer().getWorld().getName().equals(worldname)) {
+                    return true;
+                }
+            }
         }
-      }
+        return false;
     }
-    return false;
-  }
 
-  public boolean isCanBoost() {
-    //Not on cooldown
-    if (getCooldown() < 1) {
-      //TPS above threshold
-      if (TrackTPSTask.getInstance().getAverageTps() > ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
-        //Not wearing elytra or has bypass permission
-        try {
-          if (getPlayer().getInventory().getChestplate().getType() != Material.ELYTRA || getPlayer().hasPermission(ConfigManager.getInstance().getString("elytra-riptide-permission"))) {
-            return true;
-          }
-        } catch (NullPointerException ex) {
-          return true;
-          //Silence errors
+    public boolean isDisallowedInWorld() {
+        //In bypass world
+        if (ConfigManager.getInstance().getList("disallowed-worlds") != null && !ConfigManager.getInstance().getList("disallowed-worlds").isEmpty()) {
+            for (String worldname : ConfigManager.getInstance().getList("disallowed-worlds")) {
+                if (getPlayer().getWorld().getName().equals(worldname)) {
+                    return true;
+                }
+            }
         }
-      }
+        return false;
     }
-    return false;
-  }
 
-  @Override
-  public boolean isCancelled() {
-    return this.isCancelled;
-  }
-
-  @Override
-  public void setCancelled(boolean cancelled) {
-    this.isCancelled = cancelled;
-
-    if (isCancelled()) {
-      Location oldLoc = getPlayer().getLocation();
-      new BukkitRunnable() {
-        public void run() {
-          getPlayer().teleport(oldLoc);
+    public boolean isCanBoost() {
+        //Not on cooldown
+        if (getCooldown() < 1) {
+            //TPS above threshold
+            if (TrackTPSTask.getInstance().getAverageTps() > ConfigManager.getInstance().getInt("noboost-tps-treshold")) {
+                //Not wearing elytra or has bypass permission
+                try {
+                    if (getPlayer().getInventory().getChestplate().getType() != Material.ELYTRA || getPlayer().hasPermission(ConfigManager.getInstance().getString("elytra-riptide-permission"))) {
+                        return true;
+                    }
+                } catch (NullPointerException ex) {
+                    return true;
+                    //Silence errors
+                }
+            }
         }
-      }.runTaskLater(noChunkLag, 1);
+        return false;
     }
-  }
 
-  //Default custom event methods
-  private static final HandlerList handlers = new HandlerList();
+    @Override
+    public boolean isCancelled() {
+        return this.isCancelled;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.isCancelled = cancelled;
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+        if (isCancelled()) {
+            Location oldLoc = getPlayer().getLocation();
+            new BukkitRunnable() {
+                public void run() {
+                    getPlayer().teleport(oldLoc);
+                }
+            }.runTaskLater(noChunkLag, 1);
+        }
+    }
+
+    //Default custom event methods
+    private static final HandlerList handlers = new HandlerList();
+
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }
