@@ -5,6 +5,7 @@ import com.zenya.nochunklag.file.ConfigManager;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PermissionManager {
 
@@ -16,8 +17,8 @@ public class PermissionManager {
         this.cooldownType = cooldownType;
     }
 
-    public ArrayList<String> getGroups() {
-        ArrayList<String> groups = new ArrayList<>();
+    public List<String> getGroups() {
+        List<String> groups = new ArrayList<>();
         groups.addAll(ConfigManager.getInstance().getKeys("groups"));
         return groups;
     }

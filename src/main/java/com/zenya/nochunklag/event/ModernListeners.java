@@ -23,17 +23,17 @@ import org.bukkit.Material;
 
 public class ModernListeners implements Listener {
 
-    private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
+    private static NoChunkLag noChunkLag = NoChunkLag.instance();
 
     @EventHandler
     public void onPlayerRiptideEvent(PlayerRiptideEvent e) {
-        Bukkit.getServer().getPluginManager().callEvent(new TridentRiptideEvent(noChunkLag.getCooldownManager(), e));
+        Bukkit.getServer().getPluginManager().callEvent(new TridentRiptideEvent(noChunkLag.cooldownManager(), e));
     }
 
     @EventHandler
     public void onTridentRiptideEvent(TridentRiptideEvent e) {
         Player player = e.getPlayer();
-        ChatBuilder chat = new ChatBuilder(noChunkLag.getCooldownManager()).withPlayer(player).withWorld(player.getWorld());
+        ChatBuilder chat = new ChatBuilder(noChunkLag.cooldownManager()).withPlayer(player).withWorld(player.getWorld());
         PermissionManager pm = new PermissionManager(player, CooldownType.TRIDENT_RIPTIDE);
 
         //Disable limits in disabled worlds

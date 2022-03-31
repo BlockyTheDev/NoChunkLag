@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TridentRiptideEvent extends Event implements Cancellable {
 
-    private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
+    private static NoChunkLag noChunkLag = NoChunkLag.instance();
     private CooldownManager cooldownManager;
     private PlayerRiptideEvent playerRiptideEvent;
     private boolean isCancelled;

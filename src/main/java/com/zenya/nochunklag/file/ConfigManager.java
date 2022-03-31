@@ -34,14 +34,14 @@ public class ConfigManager {
     };
 
     private static ConfigManager configManager;
-    private Plugin plugin = NoChunkLag.getInstance();
+    private Plugin plugin = NoChunkLag.instance();
     private FileConfiguration origConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(plugin.getResource("config.yml")));
     private File configFile;
     private FileConfiguration config;
 
     public ConfigManager() throws IOException {
         configFile = new File(plugin.getDataFolder(), "config.yml");
-        if (!getConfigExists()) {
+        if (!configFileExists()) {
             plugin.saveDefaultConfig();
         }
         config = YamlConfiguration.loadConfiguration(configFile);
@@ -82,7 +82,7 @@ public class ConfigManager {
         }
     }
 
-    private boolean getConfigExists() {
+    private boolean configFileExists() {
         return configFile.exists();
     }
 
@@ -130,8 +130,8 @@ public class ConfigManager {
         return val;
     }
 
-    public ArrayList<String> getKeys(String node) {
-        ArrayList<String> val = new ArrayList<>();
+    public List<String> getKeys(String node) {
+        List<String> val = new ArrayList<>();
         try {
             for (String key : config.getConfigurationSection(node).getKeys(false)) {
                 val.add(key);
@@ -143,8 +143,8 @@ public class ConfigManager {
         return val;
     }
 
-    public ArrayList<String> getList(String node) {
-        ArrayList<String> val = new ArrayList<>();
+    public List<String> getList(String node) {
+        List<String> val = new ArrayList<>();
         try {
             for (String s : config.getStringList(node)) {
                 val.add(s);

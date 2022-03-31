@@ -32,14 +32,14 @@ public class MessagesManager {
     };
 
     private static MessagesManager messagesManager;
-    private Plugin plugin = NoChunkLag.getInstance();
+    private Plugin plugin = NoChunkLag.instance();
     private FileConfiguration origMessages = YamlConfiguration.loadConfiguration(new InputStreamReader(plugin.getResource("messages.yml")));
     private File messagesFile;
     private FileConfiguration messages;
 
     public MessagesManager() throws IOException {
         messagesFile = new File(plugin.getDataFolder(), "messages.yml");
-        if (!getMessagesExists()) {
+        if (!messagesFileExists()) {
             origMessages.save(messagesFile);
         }
         messages = YamlConfiguration.loadConfiguration(messagesFile);
@@ -81,7 +81,7 @@ public class MessagesManager {
         }
     }
 
-    private boolean getMessagesExists() {
+    private boolean messagesFileExists() {
         return messagesFile.exists();
     }
 

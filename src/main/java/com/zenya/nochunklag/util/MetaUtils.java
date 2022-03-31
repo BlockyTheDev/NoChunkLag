@@ -11,12 +11,12 @@ public class MetaUtils {
     }
 
     public static void setMeta(Player player, String meta, Object value) {
-        player.setMetadata(meta, new FixedMetadataValue(NoChunkLag.getInstance(), value));
+        player.setMetadata(meta, new FixedMetadataValue(NoChunkLag.instance(), value));
     }
 
     public static void clearMeta(Player player, String meta) {
         if (hasMeta(player, meta)) {
-            player.removeMetadata(meta, NoChunkLag.getInstance());
+            player.removeMetadata(meta, NoChunkLag.instance());
         }
     }
 

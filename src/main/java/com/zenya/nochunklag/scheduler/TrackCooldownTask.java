@@ -47,7 +47,7 @@ public class TrackCooldownTask implements NCLTask {
                             this.cancel();
                         }
                     }
-                }.runTaskTimer(NoChunkLag.getInstance(), 0, 20);
+                }.runTaskTimer(NoChunkLag.instance(), 0, 20);
             } else {
                 //Async task
                 bukkitTask = new BukkitRunnable() {
@@ -64,7 +64,7 @@ public class TrackCooldownTask implements NCLTask {
                             this.cancel();
                         }
                     }
-                }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 0, 20);
+                }.runTaskTimerAsynchronously(NoChunkLag.instance(), 0, 20);
             }
         }
 
@@ -88,7 +88,7 @@ public class TrackCooldownTask implements NCLTask {
                             this.cancel();
                         }
                     }
-                }.runTaskTimer(NoChunkLag.getInstance(), 0, 20);
+                }.runTaskTimer(NoChunkLag.instance(), 0, 20);
             } else {
                 //Async task
                 bukkitTask = new BukkitRunnable() {
@@ -105,7 +105,7 @@ public class TrackCooldownTask implements NCLTask {
                             this.cancel();
                         }
                     }
-                }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 0, 20);
+                }.runTaskTimerAsynchronously(NoChunkLag.instance(), 0, 20);
             }
         }
     }

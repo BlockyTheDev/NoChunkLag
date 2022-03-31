@@ -39,7 +39,7 @@ public class TrackTPSTask implements NCLTask {
                     instTps = (float) (1000 / tdiff);
                 }
             }
-        }.runTaskTimer(NoChunkLag.getInstance(), 0, 1);
+        }.runTaskTimer(NoChunkLag.instance(), 0, 1);
 
         //Task to populate avgTps
         new BukkitRunnable() {
@@ -59,7 +59,7 @@ public class TrackTPSTask implements NCLTask {
                 }
                 avgTps = totalTps / tpsList.size();
             }
-        }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 20, 20);
+        }.runTaskTimerAsynchronously(NoChunkLag.instance(), 20, 20);
     }
 
     @Override

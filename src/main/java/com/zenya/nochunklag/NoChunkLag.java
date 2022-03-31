@@ -47,12 +47,7 @@ public class NoChunkLag extends JavaPlugin {
         this.getCommand("nochunklag").setTabCompleter(new NoChunkLagTab());
     }
 
-    @Override
-    public void onDisable() {
-
-    }
-
-    public static NoChunkLag getInstance() {
+    public static NoChunkLag instance() {
         return instance;
     }
 
@@ -76,7 +71,7 @@ public class NoChunkLag extends JavaPlugin {
         updater.downloadUpdate();
     }
 
-    public CooldownManager getCooldownManager() {
+    public CooldownManager cooldownManager() {
         return cooldownManager;
     }
 }

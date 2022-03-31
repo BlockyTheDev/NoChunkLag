@@ -53,7 +53,7 @@ public class LowTPSNotifyTask implements NCLTask {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 100, 100);
+        }.runTaskTimerAsynchronously(NoChunkLag.instance(), 100, 100);
 
         //One-time task to set meta for everyone online in case of plugman reload
         new BukkitRunnable() {
@@ -63,7 +63,7 @@ public class LowTPSNotifyTask implements NCLTask {
                     MetaUtils.setMeta(player, "nochunklag.notified.regtps", "");
                 }
             }
-        }.runTaskAsynchronously(NoChunkLag.getInstance());
+        }.runTaskAsynchronously(NoChunkLag.instance());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LowTPSNotifyTask implements NCLTask {
 
     public static LowTPSNotifyTask getInstance() {
         if (nclTask == null) {
-            nclTask = new LowTPSNotifyTask(NoChunkLag.getInstance().getCooldownManager());
+            nclTask = new LowTPSNotifyTask(NoChunkLag.instance().cooldownManager());
         }
         return nclTask;
     }

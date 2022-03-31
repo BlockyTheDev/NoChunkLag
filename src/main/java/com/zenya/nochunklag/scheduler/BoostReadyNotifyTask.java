@@ -15,7 +15,7 @@ public class BoostReadyNotifyTask implements NCLTask {
 
     private static BoostReadyNotifyTask nclTask;
     private BukkitTask bukkitTask;
-    private static CooldownManager cooldownManager;
+    private CooldownManager cooldownManager;
 
     public BoostReadyNotifyTask(CooldownManager cooldownManager) {
         this.cooldownManager = cooldownManager;
@@ -49,7 +49,7 @@ public class BoostReadyNotifyTask implements NCLTask {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(NoChunkLag.getInstance(), 10, 10);
+        }.runTaskTimerAsynchronously(NoChunkLag.instance(), 10, 10);
 
         //One-time task to set meta for everyone online in case of plugman reload
         new BukkitRunnable() {
@@ -60,7 +60,7 @@ public class BoostReadyNotifyTask implements NCLTask {
                     MetaUtils.setMeta(player, "nochunklag.notified.tridentready", "");
                 }
             }
-        }.runTaskAsynchronously(NoChunkLag.getInstance());
+        }.runTaskAsynchronously(NoChunkLag.instance());
     }
 
     @Override
@@ -70,7 +70,7 @@ public class BoostReadyNotifyTask implements NCLTask {
 
     public static BoostReadyNotifyTask getInstance() {
         if (nclTask == null) {
-            nclTask = new BoostReadyNotifyTask(NoChunkLag.getInstance().getCooldownManager());
+            nclTask = new BoostReadyNotifyTask(NoChunkLag.instance().cooldownManager());
         }
         return nclTask;
     }

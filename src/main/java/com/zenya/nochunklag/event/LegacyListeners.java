@@ -25,7 +25,7 @@ import org.bukkit.Material;
 
 public class LegacyListeners implements Listener {
 
-    private static NoChunkLag noChunkLag = NoChunkLag.getInstance();
+    private static NoChunkLag noChunkLag = NoChunkLag.instance();
 
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
@@ -36,7 +36,7 @@ public class LegacyListeners implements Listener {
                 MetaUtils.setMeta(e.getPlayer(), "nochunklag.notified.elytraready", "");
                 MetaUtils.setMeta(e.getPlayer(), "nochunklag.notified.tridentready", "");
             }
-        }.runTaskAsynchronously(NoChunkLag.getInstance());
+        }.runTaskAsynchronously(NoChunkLag.instance());
     }
 
     @EventHandler
@@ -55,7 +55,7 @@ public class LegacyListeners implements Listener {
             if (item.getType() == Material.FIREWORK_ROCKET) {
                 if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
                     if (player.isGliding()) {
-                        Bukkit.getServer().getPluginManager().callEvent(new ElytraBoostEvent(noChunkLag.getCooldownManager(), event));
+                        Bukkit.getServer().getPluginManager().callEvent(new ElytraBoostEvent(noChunkLag.cooldownManager(), event));
                     }
                 }
             }
@@ -65,7 +65,7 @@ public class LegacyListeners implements Listener {
     @EventHandler
     public void onElytraBoostEvent(ElytraBoostEvent e) {
         Player player = e.getPlayer();
-        ChatBuilder chat = new ChatBuilder(noChunkLag.getCooldownManager()).withPlayer(player).withWorld(player.getWorld());
+        ChatBuilder chat = new ChatBuilder(noChunkLag.cooldownManager()).withPlayer(player).withWorld(player.getWorld());
         PermissionManager pm = new PermissionManager(player, CooldownType.ELYTRA_BOOST);
 
         //Disable limits in disabled worlds
