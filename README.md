@@ -16,4 +16,3 @@ NoChunkLag prevents players from travelling at **excessively high speeds** to **
 
 ## Credits
 This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.<br><br>
-Copyright © Optic_Fusion1 (Previously Zenya4) ([Optic_Fusion1#3315](https://discord.gg/jMEsq4zHVA) on Discord)
